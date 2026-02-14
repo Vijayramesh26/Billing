@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useLoaderStore } from '@/stores/loader'
 
 const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
@@ -8,14 +9,30 @@ const apiClient = axios.create({
     }
 })
 
-// Request interceptor to add token
+// Request interceptor to add token and show loader
 apiClient.interceptors.request.use(config => {
+    const loaderStore = useLoaderStore()
+    loaderStore.show()
+    
     const token = localStorage.getItem('token')
     if (token) {
         config.headers.Authorization = `Bearer ${token}`
     }
     return config
 }, error => {
+    const loaderStore = useLoaderStore()
+    loaderStore.hide()
+    return Promise.reject(error)
+})
+
+// Response interceptor to hide loader
+apiClient.interceptors.response.use(response => {
+    const loaderStore = useLoaderStore()
+    loaderStore.hide()
+    return response
+}, error => {
+    const loaderStore = useLoaderStore()
+    loaderStore.hide()
     return Promise.reject(error)
 })
 
