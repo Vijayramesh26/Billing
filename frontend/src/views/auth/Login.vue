@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="4" lg="3">
         <v-card class="elevation-10 rounded-xl pa-5">
             <div class="text-center mt-4 mb-6">
-                 <img src="/logo.svg" alt="Seyyal Logo" style="height: 60px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+                 <img src="/logo.svg" alt="Seyal Logo" style="height: 60px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
             </div>
           <v-card-title class="text-h4 font-weight-black text-center text-secondary mb-1">
             Welcome Back
@@ -57,7 +57,7 @@
           </v-card-text>
         </v-card>
              <div class="text-center mt-4 text-caption text-medium-emphasis">
-            &copy; {{ new Date().getFullYear() }} Seyyal. All rights reserved.
+            &copy; {{ new Date().getFullYear() }} Seyal. All rights reserved.
           </div>
       </v-col>
     </v-row>

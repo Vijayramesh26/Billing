@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 align-start">
-    <v-card class="rounded-xl elevation-10 modern-card bg-white border-thin w-100">
+  <v-container fluid class="fill-height bg-background pa-6 align-start">
+    <v-card class="rounded-xl elevation-10 modern-card bg-surface border-thin w-100">
       <div class="card-header-glow"></div>
       
       <!-- Toolbar -->
@@ -23,7 +23,7 @@
             density="compact"
             class="mr-4"
             style="max-width: 300px"
-            bg-color="grey-lighten-5"
+            bg-color="background"
             rounded="lg"
           ></v-text-field>
           <v-btn 
@@ -138,7 +138,7 @@
         <v-card-actions class="pa-4">
           <v-spacer></v-spacer>
           <v-btn color="grey-darken-1" variant="text" size="large" @click="dialog = false">Cancel</v-btn>
-          <v-btn color="primary" variant="flat" size="large" rounded="lg" @click="save" class="px-6">Save Product</v-btn>
+          <v-btn color="primary" variant="flat" size="large" rounded="lg" @click="save" class="px-6 bg-gradient-gold">Save Product</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -248,5 +248,8 @@ export default {
     top: 0; left: 0; right: 0; height: 4px;
     background: linear-gradient(90deg, #1976D2, #42A5F5);
 }
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
 </style>

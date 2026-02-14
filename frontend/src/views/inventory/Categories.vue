@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 align-start">
-    <v-card class="rounded-xl elevation-10 bg-white border-thin w-100">
+  <v-container fluid class="fill-height bg-background pa-6 align-start">
+    <v-card class="rounded-xl elevation-10 bg-surface border-thin w-100">
       <div class="card-header-glow"></div>
       
       <!-- Toolbar -->
@@ -116,5 +116,5 @@ export default {
     top: 0; left: 0; right: 0; height: 4px;
     background: linear-gradient(90deg, #1976D2, #42A5F5);
 }
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
 </style>

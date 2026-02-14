@@ -186,7 +186,7 @@ export default {
         return apiClient.put(`/admin/employees/${id}/password`, { password }, { skipGlobalLoader: true })
     },
     changePassword(password) {
-        return apiClient.put('/admin/me/password', { password }, { skipGlobalLoader: true })
+        return apiClient.put('/user/password', { password }, { skipGlobalLoader: true })
     },
     updateEmployeeStatus(id, status) {
         return apiClient.put(`/admin/employees/${id}/status`, status, { skipGlobalLoader: true })

@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex flex-column align-start">
     <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
         <div class="mb-4 mb-md-0">
             <h1 class="text-h4 font-weight-black text-secondary">Product Inventory</h1>
@@ -22,12 +22,12 @@
         :items="products" 
         :loading="loading" 
         search
-        class="rounded-xl elevation-1 bg-white"
+        class="rounded-xl elevation-1 bg-surface"
         hover 
         mobile-breakpoint="0"
       >
             <template v-slot:top>
-                <div class="px-4 py-3 d-flex align-center bg-white border-b rounded-t-xl w-100">
+                <div class="px-4 py-3 d-flex align-center bg-surface border-b rounded-t-xl w-100">
                     <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
                     <v-text-field
                         v-model="search"
@@ -40,16 +40,16 @@
                 </div>
             </template>
 
-            <template v-slot:header="{ props }">
+            <template v-slot:headers="{ columns }">
                 <tr>
-                    <th v-for="head in props.headers" :key="head.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-grey-lighten-5 py-3 border-b">
-                        {{ head.title }}
+                    <th v-for="column in columns" :key="column.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-background py-3 border-b">
+                        {{ column.title }}
                     </th>
                 </tr>
             </template>
             
             <template v-slot:item="{ item }">
-                <tr class="hover-bg-grey-lighten-5 transition-swing">
+                <tr class="transition-swing">
                     <td class="py-4">
                         <div class="font-weight-bold text-body-2 text-grey-darken-3">{{ item.name }}</div>
                         <div class="text-caption text-grey">{{ item.brand ? item.brand.name : '' }}</div>
@@ -75,7 +75,7 @@
                         </v-chip>
                     </td>
                     <td class="py-4 text-right">
-                        <div class="d-flex align-center justify-end text-caption text-grey-darken-1 font-family-monospace bg-grey-lighten-4 px-2 py-1 rounded d-inline-block">
+                        <div class="d-flex align-center justify-end text-caption font-family-monospace bg-background px-2 py-1 rounded d-inline-block border">
                              <v-icon start size="x-small" class="mr-1">mdi-barcode</v-icon>
                              {{ item.barcode }}
                         </div>
@@ -158,7 +158,7 @@
           </v-container>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pa-4 bg-grey-lighten-5">
+        <v-card-actions class="pa-4 bg-background">
           <v-spacer></v-spacer>
           <v-btn color="grey-darken-1" variant="text" size="large" @click="dialog = false" class="mr-2">Cancel</v-btn>
           <v-btn color="primary" variant="flat" size="large" rounded="lg" class="px-6" @click="save" elevation="2">Save Product</v-btn>
@@ -237,5 +237,5 @@ export default {
 .bg-gradient-gold {
     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
 }
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
 </style>

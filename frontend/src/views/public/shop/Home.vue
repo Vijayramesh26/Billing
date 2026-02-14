@@ -2,7 +2,7 @@
   <div class="home-view">
     <!-- Hero Section -->
     <HeroSection
-      :title="siteInfo?.name || 'Seyyal'"
+      :title="siteInfo?.name || 'Seyal'"
       :subtitle="siteInfo?.tagline || 'Elevate Your Daily Lifestyle'"
       :backgroundImage="'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'"
       ctaText="Explore Collection"
@@ -65,7 +65,7 @@
                       name: 'Premium Item ' + n, 
                       unit_price: 100 * n, 
                       image: 'https://placehold.co/400x500', 
-                      brand: {name: 'Seyyal'} 
+                      brand: {name: 'Seyal'} 
                   }" 
                   @add-to-cart="addToCart"
                />

@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex flex-column align-start">
     <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
         <div class="mb-4 mb-md-0">
             <h1 class="text-h4 font-weight-black gradient-text">Team</h1>
@@ -21,11 +21,11 @@
         :items="employees" 
         :loading="loading"
         :search="search"
-        class="rounded-xl elevation-1 bg-white flex-grow-1"
+        class="rounded-xl elevation-1 bg-surface flex-grow-1"
         hover
       >
         <template v-slot:top>
-            <div class="px-4 py-3 d-flex align-center bg-white border-b w-100">
+            <div class="px-4 py-3 d-flex align-center bg-surface border-b w-100">
                 <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
                 <v-text-field
                     v-model="search"
@@ -38,10 +38,10 @@
             </div>
         </template>
 
-        <template v-slot:header="{ props }">
+        <template v-slot:headers="{ columns }">
             <tr>
-                <th v-for="head in props.headers" :key="head.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-grey-lighten-5 py-3 border-b">
-                    {{ head.title }}
+                <th v-for="column in columns" :key="column.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-background py-3 border-b">
+                    {{ column.title }}
                 </th>
             </tr>
         </template>
@@ -145,7 +145,7 @@
             </v-row>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pa-4 bg-grey-lighten-5">
+        <v-card-actions class="pa-4 bg-background">
           <v-spacer></v-spacer>
           <v-btn color="grey-darken-1" variant="text" size="large" @click="close" class="mr-2">Cancel</v-btn>
           <v-btn class="bg-gradient-gold text-white px-6" variant="flat" size="large" rounded="lg" @click="save" :loading="saving">Save Employee</v-btn>
@@ -173,7 +173,7 @@
             ></v-text-field>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pa-4 bg-grey-lighten-5">
+        <v-card-actions class="pa-4 bg-background">
           <v-spacer></v-spacer>
           <v-btn color="grey-darken-1" variant="text" @click="resetDialog = false">Cancel</v-btn>
           <v-btn color="orange-darken-2" variant="flat" rounded="lg" @click="handleResetPassword" :loading="resetting">Reset Password</v-btn>
@@ -338,8 +338,9 @@ export default {
 
 <style scoped>
 .hover-bg-grey-lighten-5:hover {
-    background-color: #FAFAFA !important;
+    background-color: rgba(var(--v-theme-primary), 0.05) !important;
 }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
 .bg-gradient-gold {
     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
 }

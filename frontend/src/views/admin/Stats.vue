@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex flex-column align-start">
     <div class="mb-8 w-100">
         <h1 class="text-h4 font-weight-black gradient-text">Welcome Back, {{ user?.username || 'Admin' }}</h1>
         <div class="text-subtitle-1 text-grey-darken-1">System status and user metrics</div>
@@ -8,9 +8,9 @@
     <!-- Stats Cards -->
     <v-row class="w-100 mb-6">
       <v-col cols="12" md="4">
-        <v-card class="rounded-xl border-thin elevation-0 overflow-hidden bg-white" height="100%">
+        <v-card class="rounded-xl border-thin elevation-0 overflow-hidden bg-surface" height="100%">
             <div class="d-flex flex-row h-100">
-                <div class="bg-amber-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
+                <div class="bg-secondary-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
                     <v-icon color="secondary" size="48">mdi-account-group</v-icon>
                 </div>
                 <div class="pa-4 d-flex flex-column justify-center flex-grow-1">
@@ -22,9 +22,9 @@
       </v-col>
       
       <v-col cols="12" md="4">
-        <v-card class="rounded-xl border-thin elevation-0 overflow-hidden bg-white" height="100%">
+        <v-card class="rounded-xl border-thin elevation-0 overflow-hidden bg-surface" height="100%">
             <div class="d-flex flex-row h-100">
-                <div class="bg-amber-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
+                <div class="bg-secondary-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
                     <v-icon color="secondary" size="48">mdi-account-check</v-icon>
                 </div>
                 <div class="pa-4 d-flex flex-column justify-center flex-grow-1">
@@ -39,9 +39,9 @@
     <!-- Charts/Details Section -->
     <v-row class="w-100">
       <v-col cols="12" md="6">
-        <v-card class="rounded-xl elevation-0 border-thin pa-4 bg-white">
+        <v-card class="rounded-xl elevation-0 border-thin pa-4 bg-surface">
             <div class="d-flex align-center mb-4 px-2">
-                <div class="bg-amber-lighten-5 pa-3 rounded-lg mr-3">
+                <div class="bg-secondary-lighten-5 pa-3 rounded-lg mr-3">
                     <v-icon color="amber-darken-3">mdi-chart-pie</v-icon>
                 </div>
                 <div>
@@ -116,8 +116,8 @@ export default {
 </script>
 
 <style scoped>
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
-.border-dashed { border-style: dashed; border-color: rgba(0,0,0,0.1); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
+.border-dashed { border-style: dashed; border-color: rgba(var(--v-border-color), 0.2); }
 .bg-gradient-gold {
     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
 }

@@ -2,7 +2,7 @@
   <div class="bg-background fill-height">
     <!-- Top App Bar (Always Visible) -->
     <v-app-bar app color="surface" elevation="0" class="px-md-4 border-b-gold">
-        <div v-if="companyLogo" class="d-flex align-center mr-3 cursor-pointer select-none" style="height: 100%; max-width: 200px;" @click="$router.push('/')">
+        <div v-if="companyLogo" class="d-flex align-center mr-3 cursor-pointer select-none" style="height: 100%; max-width: 200px;" @click="$router.push('/admin')">
           <img :src="companyLogo" alt="Logo" style="max-height: 48px; max-width: 100%; object-fit: contain;" />
         </div>
         
@@ -33,6 +33,17 @@
                     </v-btn>
                   </template>
                   <v-list class="rounded-xl mt-2 elevation-10 pa-2" min-width="200">
+                    <v-list-item @click="toggleTheme" rounded="lg">
+                      <template v-slot:prepend>
+                        <v-icon :color="isDark ? 'amber' : 'secondary'">
+                          {{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}
+                        </v-icon>
+                      </template>
+                      <v-list-item-title class="font-weight-medium">
+                        {{ isDark ? 'Light' : 'Dark' }} Mode
+                      </v-list-item-title>
+                    </v-list-item>
+                    <v-divider class="my-2"></v-divider>
                     <v-list-item @click="passwordDialog = true" rounded="lg">
                       <template v-slot:prepend><v-icon color="secondary">mdi-lock-reset</v-icon></template>
                       <v-list-item-title class="font-weight-medium">Change Password</v-list-item-title>
@@ -57,6 +68,17 @@
                 </v-btn>
               </template>
               <v-list class="rounded-xl mt-2 elevation-10 pa-2" min-width="200">
+                <v-list-item @click="toggleTheme" rounded="lg">
+                  <template v-slot:prepend>
+                    <v-icon :color="isDark ? 'amber' : 'secondary'">
+                      {{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}
+                    </v-icon>
+                  </template>
+                  <v-list-item-title class="font-weight-medium">
+                    {{ isDark ? 'Light' : 'Dark' }} Mode
+                  </v-list-item-title>
+                </v-list-item>
+                <v-divider class="my-2"></v-divider>
                 <v-list-item @click="passwordDialog = true" rounded="lg">
                   <template v-slot:prepend><v-icon color="secondary">mdi-lock-reset</v-icon></template>
                   <v-list-item-title class="font-weight-medium">Change Password</v-list-item-title>
@@ -118,7 +140,7 @@
 import { mapState, mapActions } from 'pinia'
 import { useAuthStore } from '../../stores/auth'
 import { useSnackbarStore } from '@/stores/snackbar'
-import { useDisplay } from 'vuetify'
+import { useDisplay, useTheme } from 'vuetify'
 import EventServices from '../../services/EventServices'
 
 export default {
@@ -126,7 +148,8 @@ export default {
   setup() {
     const { mobile } = useDisplay()
     const snackbarStore = useSnackbarStore()
-    return { mobile, snackbarStore }
+    const theme = useTheme()
+    return { mobile, snackbarStore, theme }
   },
   data() {
     return {
@@ -144,8 +167,17 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ['user']),
+    isDark() {
+      return this.theme.global.current.value.dark
+    }
   },
   async mounted() {
+    // Persistent theme (optional check but good practice)
+    const savedTheme = localStorage.getItem('theme-mode')
+    if (savedTheme) {
+      this.theme.global.name.value = savedTheme
+    }
+
     try {
       const res = await EventServices.getConfig()
       if (res.data.company_name) {
@@ -163,6 +195,10 @@ export default {
     handleLogout() {
       this.logout()
       this.$router.push('/login')
+    },
+    toggleTheme() {
+      this.theme.global.name.value = this.theme.global.current.value.dark ? 'lightTheme' : 'darkTheme'
+      localStorage.setItem('theme-mode', this.theme.global.name.value)
     },
     async handleResetPassword() {
       if (!this.newPassword) return

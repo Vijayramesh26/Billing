@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex flex-column align-start">
     <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
       <div class="mb-4 mb-md-0">
         <h1 class="text-h4 font-weight-black gradient-text">Customer Orders</h1>
@@ -84,7 +84,7 @@
                   class="text-body-1 w-100"
                 ></v-text-field>
               </div>
-              <div class="d-flex align-center pa-2 bg-grey-lighten-5">
+              <div class="d-flex align-center pa-2 bg-background">
                 <v-tabs v-model="statusFilter" density="compact" color="secondary" bg-color="transparent">
                     <v-tab value="ALL" class="text-caption font-weight-bold">All</v-tab>
                     <v-tab value="PENDING" class="text-caption font-weight-bold">Pending</v-tab>
@@ -140,7 +140,7 @@
             <template v-slot:item.status="{ item }">
                <v-chip
                 :color="getStatusColor(item.status)"
-                :class="`text-${getStatusColor(item.status)} bg-${getStatusColor(item.status)}-lighten-5`"
+                variant="tonal"
                 size="small"
                 label
                 class="font-weight-bold text-caption"

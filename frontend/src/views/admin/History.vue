@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex flex-column align-start">
     <div class="mb-6 w-100">
         <h1 class="text-h4 font-weight-black gradient-text">Access Logs</h1>
         <div class="text-subtitle-1 text-grey-darken-1">Monitor system login activity</div>
@@ -11,11 +11,11 @@
         :items="history"
         :loading="loading"
         :search="search"
-        class="rounded-xl elevation-1 bg-white flex-grow-1"
+        class="rounded-xl elevation-1 bg-surface flex-grow-1"
         hover
       >
         <template v-slot:top>
-            <div class="px-4 py-3 d-flex align-center bg-white border-b w-100">
+            <div class="px-4 py-3 d-flex align-center bg-surface border-b w-100">
                 <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
                 <v-text-field
                     v-model="search"
@@ -28,10 +28,10 @@
             </div>
         </template>
 
-        <template v-slot:header="{ props }">
+        <template v-slot:headers="{ columns }">
             <tr>
-                <th v-for="head in props.headers" :key="head.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-grey-lighten-5 py-3 border-b">
-                    {{ head.title }}
+                <th v-for="column in columns" :key="column.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-background py-3 border-b">
+                    {{ column.title }}
                 </th>
             </tr>
         </template>
@@ -56,7 +56,7 @@
                     <div class="text-caption text-grey">{{ new Date(item.login_time).toLocaleTimeString() }}</div>
                 </td>
                 <td class="py-4">
-                    <div class="font-family-monospace bg-grey-lighten-4 px-2 py-1 rounded d-inline-block text-caption text-grey-darken-3">
+                    <div class="font-family-monospace bg-background px-2 py-1 rounded d-inline-block text-caption text-grey">
                         {{ item.ip_address || '127.0.0.1' }}
                     </div>
                 </td>
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style scoped>
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
 .bg-gradient-gold {
     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
 }

@@ -4,7 +4,7 @@
     <v-app-bar color="white" elevation="0" height="80" class="border-b-0 sticky-nav">
       <v-container class="d-flex align-center py-0">
         <div class="d-flex align-center cursor-pointer" @click="$router.push('/')">
-            <img src="/logo.svg" alt="Seyyal Logo" height="48" class="mr-3 elevation-1 rounded-lg" />
+            <img src="/logo.svg" alt="Seyal Logo" height="48" class="mr-3 elevation-1 rounded-lg" />
         </div>
         <v-spacer></v-spacer>
         

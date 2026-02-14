@@ -1,13 +1,13 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex justify-center align-center">
-    <v-card width="600" class="rounded-xl elevation-10 modern-card bg-white border-thin overflow-visible">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex justify-center align-center">
+    <v-card width="600" class="rounded-xl elevation-10 modern-card bg-surface border-thin overflow-visible">
       <div class="card-header-glow"></div>
       <v-toolbar color="transparent" class="px-6 pt-6 mb-2">
           <v-avatar color="amber-lighten-5" variant="tonal" size="48" class="mr-4 rounded-lg">
              <v-icon color="secondary" size="28">mdi-package-variant-plus</v-icon>
           </v-avatar>
           <div>
-             <v-toolbar-title class="text-h5 font-weight-black text-grey-darken-3">Update Stock</v-toolbar-title>
+             <v-toolbar-title class="text-h5 font-weight-black">Update Stock</v-toolbar-title>
              <div class="text-caption text-grey font-weight-medium">Update inventory levels</div>
           </div>
       </v-toolbar>
@@ -24,7 +24,7 @@
           density="comfortable"
           prepend-inner-icon="mdi-barcode-scan"
           class="mb-6"
-          bg-color="grey-lighten-5"
+          bg-color="background"
           rounded="lg"
           placeholder="Type name or scan barcode"
         >
@@ -44,7 +44,7 @@
         
         <v-expand-transition>
             <div v-if="selectedProduct" class="mt-2">
-                <v-card class="bg-blue-lighten-5 pa-5 rounded-xl border border-blue-lighten-4 mb-6 elevation-0 relative overflow-hidden">
+                <v-card class="bg-secondary-lighten-5 pa-5 rounded-xl border mb-6 elevation-0 relative overflow-hidden">
                     <div class="absolute-pattern"></div>
                     <v-row align="center" no-gutters>
                         <v-col cols="5">
@@ -73,7 +73,7 @@
                 variant="outlined"
                 density="comfortable"
                 class="flex-grow-1 font-weight-bold text-h6"
-                bg-color="grey-lighten-5"
+                bg-color="background"
                 rounded="lg"
                 prepend-inner-icon="mdi-plus-box-outline"
                 hide-details
@@ -155,7 +155,7 @@ export default {
 .card-header-glow {
     position: absolute;
     top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, #1976D2, #42A5F5);
+    background: linear-gradient(90deg, #C5A065, #B08D55);
 }
 .absolute-pattern {
     position: absolute;
@@ -163,7 +163,10 @@ export default {
     background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.1) 0, rgba(255,255,255,0.1) 10px, transparent 10px, transparent 20px);
 }
 .gap-4 { gap: 16px; }
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
+.bg-secondary-lighten-5 {
+    background-color: rgba(var(--v-theme-secondary), 0.08) !important;
+}
 .bg-gradient-gold {
     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
 }

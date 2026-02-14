@@ -3,12 +3,12 @@
     <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row justify-space-between align-start align-md-center mb-8">
         <div>
-            <h1 class="text-h4 font-weight-bold text-secondary">Welcome Back, {{ user?.username || 'Manager' }}</h1>
+            <h1 class="text-h4 font-weight-bold gradient-text">Welcome Back, {{ user?.username || 'Manager' }}</h1>
             <p class="text-subtitle-1 text-grey-darken-1 mt-1 font-weight-medium">Here's what's happening with your store today.</p>
         </div>
-        <div class="d-flex align-center bg-white rounded-pill px-4 py-2 elevation-1 mt-4 mt-md-0">
+        <div class="d-flex align-center bg-surface rounded-pill px-4 py-2 border-thin mt-4 mt-md-0">
             <v-icon color="secondary" class="mr-2">mdi-calendar-today</v-icon>
-            <span class="text-body-2 font-weight-bold text-grey-darken-3">{{ currentDate }}</span>
+            <span class="text-body-2 font-weight-bold text-secondary">{{ currentDate }}</span>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
     <v-row class="mb-6">
       <!-- Revenue Card -->
       <v-col cols="12" md="6" lg="3">
-        <v-card class="rounded-xl elevation-0 border-thin d-flex align-center pa-5 bg-white modern-card h-100">
+        <v-card class="rounded-xl elevation-0 border-thin d-flex align-center pa-5 bg-surface modern-card h-100">
            <div class="d-flex flex-column justify-center flex-grow-1">
               <div class="text-caption font-weight-bold text-grey text-uppercase mb-2">Today's Revenue</div>
               <div class="text-h4 font-weight-black text-secondary">₹{{ metrics.todayRevenue.toLocaleString() }}</div>
@@ -27,7 +27,7 @@
                   <span class="text-caption text-grey ml-2">vs yesterday</span>
               </div>
            </div>
-           <v-avatar color="amber-lighten-5" size="56" class="rounded-xl ml-2">
+           <v-avatar color="secondary-lighten-5" size="56" class="rounded-xl ml-2">
               <v-icon color="secondary" size="28">mdi-currency-inr</v-icon>
            </v-avatar>
         </v-card>
@@ -35,10 +35,10 @@
 
       <!-- Inventory Card -->
       <v-col cols="12" md="6" lg="3">
-        <v-card class="rounded-xl elevation-0 border-thin d-flex align-center pa-5 bg-white modern-card h-100">
+        <v-card class="rounded-xl elevation-0 border-thin d-flex align-center pa-5 bg-surface modern-card h-100">
            <div class="d-flex flex-column justify-center flex-grow-1">
               <div class="text-caption font-weight-bold text-grey text-uppercase mb-2">Inventory Value</div>
-              <div class="text-h4 font-weight-black text-grey-darken-3">₹{{ (metrics.inventoryValue / 1000).toFixed(1) }}k</div>
+              <div class="text-h4 font-weight-black text-secondary">₹{{ (metrics.inventoryValue / 1000).toFixed(1) }}k</div>
               <div class="d-flex align-center mt-2">
                   <span class="text-caption text-grey">Total Assets</span>
               </div>
@@ -101,10 +101,10 @@
     <!-- Charts Section -->
     <v-row>
       <v-col cols="12" lg="8">
-        <v-card class="rounded-xl elevation-0 border-thin pa-6 mb-6 bg-white modern-card overflow-hidden">
+        <v-card class="rounded-xl elevation-0 border-thin pa-6 mb-6 bg-surface modern-card overflow-hidden">
           <div class="d-flex align-center justify-space-between mb-6">
              <div>
-                 <div class="text-h6 font-weight-bold text-grey-darken-3">Sales Performance</div>
+                 <div class="text-h6 font-weight-bold text-secondary">Sales Performance</div>
                  <div class="text-caption text-grey">Monthly revenue overview</div>
              </div>
              <v-btn icon variant="text" color="grey"><v-icon>mdi-dots-horizontal</v-icon></v-btn>
@@ -116,9 +116,9 @@
         
         <v-row>
            <v-col cols="12" md="6">
-              <v-card class="rounded-xl elevation-0 border-thin pa-6 fill-height bg-white modern-card">
+              <v-card class="rounded-xl elevation-0 border-thin pa-6 fill-height bg-surface modern-card">
                 <div class="d-flex align-center justify-space-between mb-4">
-                   <div class="text-subtitle-1 font-weight-bold text-grey-darken-3">Category Distribution</div>
+                   <div class="text-subtitle-1 font-weight-bold text-secondary">Category Distribution</div>
                    <v-icon color="grey-lighten-1" size="small">mdi-chart-pie</v-icon>
                 </div>
                 <div style="height: 250px" class="d-flex justify-center align-center">
@@ -127,9 +127,9 @@
               </v-card>
            </v-col>
            <v-col cols="12" md="6">
-              <v-card class="rounded-xl elevation-0 border-thin pa-6 fill-height bg-white modern-card">
+              <v-card class="rounded-xl elevation-0 border-thin pa-6 fill-height bg-surface modern-card">
                 <div class="d-flex align-center justify-space-between mb-4">
-                   <div class="text-subtitle-1 font-weight-bold text-grey-darken-3">Biller Performance</div>
+                   <div class="text-subtitle-1 font-weight-bold text-secondary">Biller Performance</div>
                    <v-icon color="grey-lighten-1" size="small">mdi-account-cash</v-icon>
                 </div>
                 <div style="height: 250px">
@@ -141,7 +141,7 @@
       </v-col>
 
       <v-col cols="12" lg="4">
-         <v-card class="rounded-xl elevation-0 border-thin pa-0 fill-height bg-white modern-card overflow-hidden d-flex flex-column">
+         <v-card class="rounded-xl elevation-0 border-thin pa-0 fill-height bg-surface modern-card overflow-hidden d-flex flex-column">
           <div class="pa-6 pb-2">
              <div class="text-h6 font-weight-bold text-grey-darken-3">Weekly Goals</div>
              <div class="text-caption text-grey">Performance vs Target</div>
@@ -293,7 +293,13 @@ export default {
 }
 
 .border-thin {
-    border: 1px solid rgba(0,0,0,0.06) !important;
+    border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+}
+.gradient-text {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .bg-gradient-purple {

@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex flex-column align-start">
     <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
         <div class="mb-4 mb-md-0">
             <h1 class="text-h4 font-weight-black text-secondary">Customer Management</h1>
@@ -11,7 +11,7 @@
     <!-- Top Buys Cards -->
     <v-row class="w-100 mb-6" v-if="topCustomers.length > 0">
         <v-col cols="12" md="4" v-for="(customer, index) in topCustomers" :key="customer.id">
-            <v-card class="rounded-xl border-thin elevation-2 bg-white pa-4 relative overflow-hidden">
+            <v-card class="rounded-xl border-thin elevation-2 bg-surface pa-4 relative overflow-hidden">
                 <div class="absolute-rank text-h1 font-weight-black text-grey-lighten-4">{{ index + 1 }}</div>
                 <div class="d-flex align-center relative z-1">
                     <v-avatar :color="getRankColor(index)" size="56" class="mr-4 elevation-2 font-weight-bold text-white text-h5">
@@ -29,7 +29,7 @@
 
     <v-card class="w-100 rounded-xl elevation-0 border-thin bg-transparent">
       <!-- Search Toolbar -->
-      <div class="px-4 py-3 d-flex align-center bg-white border-b rounded-t-xl w-100">
+      <div class="px-4 py-3 d-flex align-center bg-surface border-b rounded-t-xl w-100">
           <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
           <v-text-field
               v-model="search"
@@ -48,13 +48,13 @@
         :items="customers"
         :search="search"
         :custom-filter="filterCustomers"
-        class="rounded-b-xl elevation-1 bg-white"
+        class="rounded-b-xl elevation-1 bg-surface"
         hover
       >
-        <template v-slot:header="{ props }">
+        <template v-slot:headers="{ columns }">
             <tr>
-                <th v-for="head in props.headers" :key="head.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-grey-lighten-5 py-3 border-b">
-                    {{ head.title }}
+                <th v-for="column in columns" :key="column.key" class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-background py-3 border-b">
+                    {{ column.title }}
                 </th>
             </tr>
         </template>
@@ -123,11 +123,11 @@
                 <span class="text-h6 font-weight-bold text-white">Update Discount</span>
             </div>
             <v-card-text class="pa-6">
-                <div class="d-flex align-center mb-4 bg-blue-lighten-5 pa-3 rounded-lg">
-                    <v-avatar color="white" class="mr-3 text-primary font-weight-bold" size="small"> {{ selectedCustomer?.name.charAt(0) }}</v-avatar>
+                <div class="d-flex align-center mb-4 bg-background pa-3 rounded-lg">
+                    <v-avatar color="surface" class="mr-3 text-primary font-weight-bold" size="small"> {{ selectedCustomer?.name.charAt(0) }}</v-avatar>
                      <div>
-                        <div class="font-weight-bold text-body-2 text-grey-darken-3">{{ selectedCustomer?.name }}</div>
-                        <div class="text-caption text-primary">{{ selectedCustomer?.mobile }}</div>
+                        <div class="font-weight-bold text-body-2 text-secondary">{{ selectedCustomer?.name }}</div>
+                        <div class="text-caption text-secondary">{{ selectedCustomer?.mobile }}</div>
                     </div>
                 </div>
                 
@@ -139,7 +139,7 @@
                     density="comfortable"
                     suffix="%"
                     class="font-weight-black text-h5 centered-input"
-                    bg-color="grey-lighten-5"
+                    bg-color="background"
                     items-center
                     rounded="lg"
                     autofocus
@@ -149,7 +149,7 @@
                     This will be applied <b>in addition</b> to the global discount.
                 </div>
             </v-card-text>
-            <v-card-actions class="pa-4 bg-grey-lighten-5">
+            <v-card-actions class="pa-4 bg-background">
                 <v-spacer></v-spacer>
                 <v-btn variant="text" @click="dialog = false" color="grey-darken-1">Cancel</v-btn>
                 <v-btn color="primary" variant="flat" rounded="lg" @click="saveDiscount" :loading="saving">Save Changes</v-btn>
@@ -258,7 +258,7 @@ export default {
 .centered-input :deep(input) {
     text-align: center;
 }
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
 .absolute-rank {
     position: absolute;
     right: -10px;

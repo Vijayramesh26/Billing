@@ -4,7 +4,7 @@ import axios from 'axios'
 export const useSiteStore = defineStore('site', {
   state: () => ({
     siteInfo: {
-      name: 'Seyyal',
+      name: 'Seyal',
       tagline: 'Loading...',
       description: '',
       logo: '/logo.svg',

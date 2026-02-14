@@ -14,7 +14,7 @@
     <v-list-item
       prepend-avatar="/logo.svg"
       :title="userRole.toUpperCase()"
-      subtitle="Seyyal"
+      subtitle="Seyal"
       nav
       class="py-3"
     >

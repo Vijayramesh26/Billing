@@ -1,11 +1,11 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+  <v-container fluid class="fill-height bg-background pa-6 d-flex flex-column align-start">
     <div class="d-flex justify-space-between w-100 align-center mb-6">
         <div>
             <h1 class="text-h4 font-weight-black gradient-text">Customer Orders</h1>
             <div class="text-subtitle-1 text-grey-darken-1">Track and manage incoming orders</div>
         </div>
-        <v-card class="d-flex align-center px-4 py-2 rounded-pill bg-white border-thin elevation-0">
+        <v-card class="d-flex align-center px-4 py-2 rounded-pill bg-surface border-thin elevation-0">
              <v-icon color="secondary" class="mr-2">mdi-clipboard-list-outline</v-icon>
              <span class="font-weight-bold text-secondary">{{ orders.length }} Orders</span>
         </v-card>
@@ -17,12 +17,12 @@
         :items="orders"
         :loading="loading"
         :search="search"
-        class="rounded-xl elevation-1 bg-white"
+        class="rounded-xl elevation-1 bg-surface"
         hover
         mobile-breakpoint="0"
       >
         <template v-slot:top>
-            <div class="px-4 py-3 d-flex align-center bg-white border-b">
+            <div class="px-4 py-3 d-flex align-center bg-surface border-b">
                 <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
                 <v-text-field
                     v-model="search"
@@ -38,7 +38,7 @@
         <template v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }">
             <tr>
                 <template v-for="column in columns" :key="column.key">
-                    <th class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-grey-lighten-5 py-3 border-b">
+                    <th class="text-caption font-weight-bold text-uppercase text-grey-darken-1 bg-background py-3 border-b">
                         <span class="cursor-pointer" @click="() => toggleSort(column)">{{ column.title }}</span>
                         <v-icon v-if="isSorted(column)" :icon="getSortIcon(column)" size="x-small" class="ml-1"></v-icon>
                     </th>
@@ -47,7 +47,7 @@
         </template>
 
         <template v-slot:item="{ item }">
-            <tr class="hover-bg-grey-lighten-5 transition-swing">
+            <tr class="transition-swing">
                 <td class="py-4">
                     <div class="font-weight-bold text-body-2 text-grey-darken-3">{{ item.order_no }}</div>
                     <div class="text-caption text-grey">{{ new Date(item.order_date).toLocaleDateString() }}</div>
@@ -153,7 +153,7 @@ export default {
 </script>
 
 <style scoped>
-.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.border-thin { border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); }
 .bg-gradient-gold {
     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
 }

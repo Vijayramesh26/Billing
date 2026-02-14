@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid>
-    <h2 class="mb-4">Stock View</h2>
-    <v-card class="rounded-lg elevation-2">
+  <v-container fluid class="bg-background fill-height">
+    <h2 class="mb-4 text-h5 font-weight-black text-secondary">Stock View</h2>
+    <v-card class="rounded-xl border-thin elevation-2 bg-surface">
       <v-data-table :headers="headers" :items="products" :loading="loading" search hover>
         <template v-slot:item.unit_price="{ item }">
           <span class="font-weight-bold">₹{{ item.unit_price }}</span>

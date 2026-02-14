@@ -251,7 +251,7 @@
         <div class="d-flex flex-column flex-md-row justify-space-between align-center text-caption text-grey-darken-1">
           <div>© {{ new Date().getFullYear() }} {{ siteInfo?.name }}. All rights reserved.</div>
           <div class="mt-4 mt-md-0">
-             Powered by Seyyal Engine
+             Powered by Seyal Engine
           </div>
         </div>
       </v-container>

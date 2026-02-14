@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6">
+  <v-container fluid class="fill-height bg-background pa-6">
     <!-- History Drawer -->
     <v-navigation-drawer
       v-model="historyDrawer"
@@ -11,7 +11,7 @@
       <v-toolbar color="surface" density="prominent" class="border-b pl-2">
          <v-toolbar-title class="text-h5 font-weight-bold gradient-text">Transaction History</v-toolbar-title>
          <v-spacer></v-spacer>
-         <v-btn icon="mdi-close" variant="text" color="grey-darken-1" @click="historyDrawer = false"></v-btn>
+         <v-btn icon="mdi-close" variant="text" color="secondary" @click="historyDrawer = false"></v-btn>
       </v-toolbar>
       
       <v-list lines="two" class="pa-2">
@@ -60,17 +60,17 @@
              <v-icon color="white">mdi-storefront-outline</v-icon>
          </v-avatar>
          <div>
-            <h1 class="text-h5 text-md-h4 font-weight-black text-grey-darken-3 gradient-text" style="letter-spacing: -1px;">POS Terminal</h1>
-            <div class="text-subtitle-2 text-grey-darken-1">Manage sales and billing efficiently</div>
+            <h1 class="text-h5 text-md-h4 font-weight-black text-secondary gradient-text" style="letter-spacing: -1px;">POS Terminal</h1>
+            <div class="text-subtitle-2 text-secondary opacity-70">Manage sales and billing efficiently</div>
          </div>
        </div>
        <div class="d-flex align-center gap-4 w-100 w-md-auto justify-end">
-           <v-card class="d-none d-sm-flex align-center px-4 py-2 rounded-pill modern-card mr-4 bg-white">
+           <v-card class="d-none d-sm-flex align-center px-4 py-2 rounded-pill modern-card mr-4 bg-surface border-thin">
               <span class="text-caption text-uppercase font-weight-bold text-grey mr-2">Session</span>
-              <span class="text-body-2 font-weight-bold text-grey-darken-3">{{ new Date().toLocaleDateString() }}</span>
+              <span class="text-body-2 font-weight-bold">{{ new Date().toLocaleDateString() }}</span>
            </v-card>
            
-           <v-chip color="secondary" class="bg-amber-lighten-5 font-weight-bold px-6 py-4 flex-grow-1 flex-md-grow-0 justify-center" size="large" rounded="pill">
+           <v-chip color="secondary" class="bg-secondary-lighten-5 font-weight-bold px-6 py-4 flex-grow-1 flex-md-grow-0 justify-center" size="large" rounded="pill">
               <v-icon start size="small" class="mr-2">mdi-receipt-text-outline</v-icon>
               {{ nextBillNo }}
            </v-chip>
@@ -111,9 +111,9 @@
       class="elevation-10"
     >
       <v-toolbar color="surface" density="prominent" class="border-b pl-2">
-         <v-toolbar-title class="text-h5 font-weight-bold text-orange-darken-2">Pending Orders</v-toolbar-title>
+         <v-toolbar-title class="text-h5 font-weight-bold text-secondary">Pending Orders</v-toolbar-title>
          <v-spacer></v-spacer>
-         <v-btn icon="mdi-close" variant="text" color="grey-darken-1" @click="pendingOrdersDrawer = false"></v-btn>
+         <v-btn icon="mdi-close" variant="text" color="secondary" @click="pendingOrdersDrawer = false"></v-btn>
       </v-toolbar>
       
       <div v-if="loadingPending" class="d-flex justify-center align-center pa-8">
@@ -133,7 +133,7 @@
             elevation="0"
         >
             <template v-slot:prepend>
-                <v-avatar color="orange-lighten-5" class="text-orange-darken-2 font-weight-bold" rounded="lg">
+                <v-avatar color="secondary-lighten-5" class="text-secondary font-weight-bold" rounded="lg">
                     {{ order.items ? order.items.length : 0 }}
                 </v-avatar>
             </template>
@@ -172,10 +172,10 @@
     <v-row class="fill-height">
       <!-- Left Panel: Add Items -->
       <v-col cols="12" md="4" class="d-flex flex-column">
-        <v-card class="modern-card flex-grow-1 d-flex flex-column overflow-visible bg-white">
+        <v-card class="modern-card flex-grow-1 d-flex flex-column overflow-visible bg-surface">
             <div class="pa-6 pb-2">
                 <div class="d-flex align-center mb-6">
-                    <div class="text-h6 font-weight-bold text-grey-darken-3">Details</div>
+                    <div class="text-h6 font-weight-bold text-secondary">Details</div>
                     <v-spacer></v-spacer>
                         <v-btn 
                             variant="tonal" 
@@ -200,7 +200,7 @@
                    @update:search="searchCustomers"
                    rounded="lg"
                    class="mb-2"
-                   bg-color="grey-lighten-5"
+                   bg-color="background"
                    hide-details="auto"
                >
                    <template v-slot:selection="{ item }">
@@ -222,7 +222,7 @@
             <v-divider class="mx-6 border-dashed"></v-divider>
 
             <div class="pa-6 pt-4 flex-grow-1">
-              <div class="text-subtitle-2 font-weight-bold text-grey-darken-2 mb-3">Add Products</div>
+              <div class="text-subtitle-2 font-weight-bold text-secondary mb-3">Add Products</div>
                <!-- Product Selection -->
                <v-autocomplete
                  v-model="selectedProduct"
@@ -237,14 +237,14 @@
                  auto-select-first
                  class="mb-6"
                  rounded="lg"
-                 bg-color="grey-lighten-5"
+                 bg-color="background"
                  menu-icon="mdi-chevron-down"
                >
                  <template v-slot:item="{ props, item }">
                    <v-list-item v-bind="props" :title="item.raw.name" :subtitle="item.raw.brand ? item.raw.brand.name : ''" class="py-3 border-b">
                      <template v-slot:append>
                          <div class="d-flex flex-column align-end">
-                             <span class="font-weight-bold text-body-2">₹{{ item.raw.unit_price }}</span>
+                             <span class="font-weight-bold text-body-2 text-secondary">₹{{ item.raw.unit_price }}</span>
                              <v-chip size="x-small" :color="item.raw.current_stock < 10 ? 'red-lighten-4' : 'green-lighten-4'" class="mt-1 font-weight-bold" :class="item.raw.current_stock < 10 ? 'text-red' : 'text-green-darken-2'">
                                  {{ item.raw.current_stock }} in stock
                              </v-chip>
@@ -255,28 +255,28 @@
                </v-autocomplete>
               
               <v-expand-transition>
-                  <div v-if="selectedProduct" class="bg-blue-lighten-5 pa-4 rounded-xl mb-6">
+                  <div v-if="selectedProduct" class="bg-secondary-lighten-5 pa-4 rounded-xl mb-6 border-thin">
                       <div class="d-flex justify-space-between align-center mb-3">
-                        <span class="text-subtitle-2 text-grey-darken-2">Item Price</span>
+                        <span class="text-subtitle-2 text-secondary opacity-70">Item Price</span>
                          <span class="text-h6 font-weight-bold text-secondary">₹{{ selectedProduct.unit_price }}</span>
                       </div>
                       
                       <div class="d-flex align-center">
-                          <v-btn icon="mdi-minus" size="small" variant="text" color="secondary" @click="qty > 1 ? qty-- : null" class="bg-white rounded-lg"></v-btn>
+                          <v-btn icon="mdi-minus" size="small" variant="text" color="secondary" @click="qty > 1 ? qty-- : null" class="bg-background rounded-lg"></v-btn>
                          <v-text-field
                             v-model.number="qty"
                             type="number"
                             variant="plain"
                             density="compact"
                             hide-details
-                            class="text-center mx-2 font-weight-bold text-h6"
+                            class="text-center mx-2 font-weight-bold text-h6 text-secondary"
                             style="max-width: 60px"
                          ></v-text-field>
-                          <v-btn icon="mdi-plus" size="small" variant="text" color="secondary" @click="qty++" class="bg-white rounded-lg"></v-btn>
+                          <v-btn icon="mdi-plus" size="small" variant="text" color="secondary" @click="qty++" class="bg-background rounded-lg"></v-btn>
                       </div>
                       
                       <div class="d-flex justify-space-between align-center mt-4 pt-3 border-t border-dashed border-opacity-50">
-                        <span class="text-subtitle-2 font-weight-bold text-grey-darken-3">Subtotal</span>
+                        <span class="text-subtitle-2 font-weight-bold text-secondary">Subtotal</span>
                         <span class="text-h5 font-weight-black gradient-text">₹{{ (selectedProduct.unit_price * (qty || 0)).toFixed(2) }}</span>
                       </div>
                   </div>
@@ -300,12 +300,12 @@
 
       <!-- Right Panel: Bill Preview -->
       <v-col cols="12" md="8" class="d-flex flex-column h-100">
-        <v-card class="modern-card flex-grow-1 d-flex flex-column bg-white h-100" style="max-height: calc(100vh - 120px);">
+        <v-card class="modern-card flex-grow-1 d-flex flex-column bg-surface h-100" style="max-height: calc(100vh - 120px);">
           <div class="d-flex justify-space-between align-center px-6 py-4 border-b">
             <div class="d-flex align-center">
-               <v-icon color="grey-darken-1" class="mr-2">mdi-shopping-outline</v-icon>
-               <span class="text-h6 font-weight-bold text-grey-darken-3">Current Cart</span>
-                <v-chip class="ml-3 font-weight-bold bg-amber-lighten-5 text-secondary" size="small" rounded="pill">{{ cart.length }} items</v-chip>
+               <v-icon color="secondary" class="mr-2">mdi-shopping-outline</v-icon>
+               <span class="text-h6 font-weight-bold text-secondary">Current Cart</span>
+                <v-chip class="ml-3 font-weight-bold bg-secondary-lighten-5 text-secondary" size="small" rounded="pill">{{ cart.length }} items</v-chip>
             </div>
             <v-btn width="40" height="40" icon variant="tonal" color="error" class="rounded-lg" @click="cart = []" :disabled="cart.length === 0" title="Clear Cart">
                <v-icon>mdi-delete-sweep-outline</v-icon>
@@ -315,41 +315,41 @@
           <div class="flex-grow-1 position-relative overflow-y-auto" style="min-height: 200px;">
              <!-- Empty State -->
              <div v-if="cart.length === 0" class="d-flex flex-column align-center justify-center fill-height text-grey-lighten-1">
-                <div class="bg-grey-lighten-5 pa-6 rounded-circle mb-4">
+                <div class="bg-background pa-6 rounded-circle mb-4">
                     <v-icon size="64" color="grey-lighten-2">mdi-cart-variant</v-icon>
                 </div>
-                <div class="text-h6 font-weight-medium text-grey">Your cart is empty</div>
-                <div class="text-body-2 text-grey-lighten-1 mt-1">Select items to begin transaction</div>
+                <div class="text-h6 font-weight-medium text-secondary opacity-70">Your cart is empty</div>
+                <div class="text-body-2 text-secondary opacity-50 mt-1">Select items to begin transaction</div>
              </div>
 
              <!-- Cart List -->
-             <v-table v-else fixed-header hover density="comfortable">
+             <v-table v-else fixed-header hover density="comfortable" class="bg-transparent">
                  <thead>
                     <tr>
-                       <th class="text-left text-uppercase text-caption font-weight-bold text-grey pl-6">Product</th>
-                       <th class="text-center text-uppercase text-caption font-weight-bold text-grey">Qty</th>
-                       <th class="text-right text-uppercase text-caption font-weight-bold text-grey">Price</th>
-                       <th class="text-right text-uppercase text-caption font-weight-bold text-grey">Total</th>
-                       <th class="text-center text-uppercase text-caption font-weight-bold text-grey pr-6"></th>
+                       <th class="text-left text-uppercase text-caption font-weight-bold text-secondary opacity-70 pl-6">Product</th>
+                       <th class="text-center text-uppercase text-caption font-weight-bold text-secondary opacity-70">Qty</th>
+                       <th class="text-right text-uppercase text-caption font-weight-bold text-secondary opacity-70">Price</th>
+                       <th class="text-right text-uppercase text-caption font-weight-bold text-secondary opacity-70">Total</th>
+                       <th class="text-center text-uppercase text-caption font-weight-bold text-secondary opacity-70 pr-6"></th>
                     </tr>
                  </thead>
                  <tbody>
                     <tr v-for="item in cart" :key="item.product_id" class="transition-swing">
                        <td class="pl-6 py-3">
-                          <div class="font-weight-bold text-body-2">{{ item.name }}</div>
-                          <div class="text-caption text-grey">{{ item.brand_name || 'Generic' }}</div>
+                          <div class="font-weight-bold text-body-2 text-secondary">{{ item.name }}</div>
+                          <div class="text-caption text-secondary opacity-70">{{ item.brand_name || 'Generic' }}</div>
                        </td>
                        <td class="text-center">
-                          <div class="d-inline-flex align-center bg-grey-lighten-4 rounded-pill px-1">
-                              <v-btn icon="mdi-minus" size="x-small" variant="text" density="comfortable" color="grey-darken-2" @click="decreaseQty(item)"></v-btn>
-                              <span class="mx-2 font-weight-bold text-body-2" style="min-width: 20px">{{ item.quantity }}</span>
+                          <div class="d-inline-flex align-center bg-background rounded-pill px-1 border-thin">
+                              <v-btn icon="mdi-minus" size="x-small" variant="text" density="comfortable" color="secondary" @click="decreaseQty(item)"></v-btn>
+                              <span class="mx-2 font-weight-bold text-body-2 text-secondary" style="min-width: 20px">{{ item.quantity }}</span>
                                <v-btn icon="mdi-plus" size="x-small" variant="text" density="comfortable" color="secondary" @click="increaseQty(item)"></v-btn>
                           </div>
                        </td>
-                       <td class="text-right text-body-2">₹{{ item.unit_price }}</td>
-                       <td class="text-right font-weight-bold text-body-2">₹{{ item.total }}</td>
+                       <td class="text-right text-body-2 text-secondary">₹{{ item.unit_price }}</td>
+                       <td class="text-right font-weight-bold text-body-2 text-secondary">₹{{ item.total }}</td>
                        <td class="text-center pr-6">
-                          <v-btn icon="mdi-close" size="small" variant="text" color="grey-lighten-1" class="hover-red" @click="removeFromCart(item)"></v-btn>
+                          <v-btn icon="mdi-close" size="small" variant="text" color="secondary-lighten-1" class="hover-red" @click="removeFromCart(item)"></v-btn>
                        </td>
                     </tr>
                  </tbody>
@@ -358,40 +358,40 @@
           </div>
           
           <!-- Modern Footer -->
-          <div class="pa-6 bg-grey-lighten-5 rounded-b-xl border-t">
+          <div class="pa-6 bg-background rounded-b-xl border-t">
             <v-row align="center">
                <v-col cols="12" md="5">
-                  <div class="text-caption font-weight-bold text-uppercase text-grey mb-2">Payment Method</div>
+                  <div class="text-caption font-weight-bold text-uppercase text-secondary opacity-70 mb-2">Payment Method</div>
                   <v-item-group v-model="paymentMode" mandatory class="d-flex gap-2">
                        <v-item v-for="mode in ['CASH', 'ONLINE', 'UPI']" :key="mode" :value="mode" v-slot="{ isSelected, toggle }">
                            <v-card
-                               :color="isSelected ? 'secondary' : 'white'"
+                               :color="isSelected ? 'secondary' : 'surface'"
                                :variant="isSelected ? 'flat' : 'outlined'"
                                class="d-flex align-center justify-center px-4 py-2 rounded-lg cursor-pointer mr-2 transition-swing"
                                @click="toggle"
                                :elevation="isSelected ? 2 : 0"
                                border
                            >
-                               <span class="text-caption font-weight-bold" :class="isSelected ? 'text-white' : 'text-grey-darken-2'">{{ mode }}</span>
+                               <span class="text-caption font-weight-bold" :class="isSelected ? 'text-white' : 'text-secondary'">{{ mode }}</span>
                            </v-card>
                        </v-item>
                   </v-item-group>
                </v-col>
                <v-col cols="12" md="7">
-                  <v-card class="pa-4 bg-white rounded-xl border elevation-0">
+                  <v-card class="pa-4 bg-surface rounded-xl border-thin elevation-0">
                       <div class="d-flex justify-space-between mb-2">
-                         <span class="text-body-2 text-grey-darken-1">Subtotal</span>
-                         <span class="font-weight-bold">₹{{ subTotal.toFixed(2) }}</span>
+                         <span class="text-body-2 text-secondary opacity-70">Subtotal</span>
+                         <span class="font-weight-bold text-secondary">₹{{ subTotal.toFixed(2) }}</span>
                       </div>
                       
-                      <div class="d-flex justify-space-between mb-2 text-grey-darken-1">
+                      <div class="d-flex justify-space-between mb-2 text-secondary opacity-70">
                          <span class="text-caption">GST (18%)</span>
                          <span>₹{{ (subTotal * 0.18).toFixed(2) }}</span>
                       </div>
                       <div class="d-flex justify-space-between mb-3 text-caption text-success" v-if="totalDiscountPercent > 0">
                          <div class="d-flex flex-column">
                              <span>Total Discount ({{ totalDiscountPercent }}%)</span>
-                             <span class="text-xs text-grey-lighten-1">
+                             <span class="text-xs text-secondary opacity-50">
                                 Base: {{ activeRule ? activeRule.percentage + '% (Tiered)' : globalDiscount + '% (Global)' }}
                                 <span v-if="selectedCustomer && selectedCustomer.discount_percent > 0"> + Customer: {{ selectedCustomer.discount_percent }}%</span>
                              </span>
@@ -400,7 +400,7 @@
                       </div>
                       <v-divider class="mb-3 border-dashed"></v-divider>
                       <div class="d-flex justify-space-between align-center">
-                         <span class="text-h6 font-weight-bold text-grey-darken-3">Net Payable</span>
+                         <span class="text-h6 font-weight-bold text-secondary">Net Payable</span>
                          <span class="text-h4 font-weight-black gradient-text">₹{{ netPayable.toFixed(2) }}</span>
                       </div>
                   </v-card>
@@ -434,7 +434,7 @@
                 <span class="text-h6 font-weight-bold text-white">Invoice Preview</span>
                 <v-btn icon="mdi-close" variant="text" color="white" density="compact" @click="previewDialog = false" class="text-white"></v-btn>
             </div>
-            <v-card-text class="pa-0 bg-white" id="invoice-section">
+            <v-card-text class="pa-0 bg-surface" id="invoice-section">
                 <div class="pa-8">
                     <div class="text-center mb-6">
                         <div class="d-inline-flex align-center justify-center bg-gradient-gold rounded-circle mb-3" style="width:48px; height:48px">
@@ -445,7 +445,7 @@
                         <div class="text-caption text-grey-darken-1">Phone: {{ companyPhone }}</div>
                     </div>
                     
-                    <div class="d-flex justify-space-between text-caption mb-4 pa-3 bg-grey-lighten-4 rounded-lg">
+                    <div class="d-flex justify-space-between text-caption mb-4 pa-3 bg-background rounded-lg border">
                         <div>
                             <div class="text-grey">Bill No</div>
                             <div class="font-weight-bold text-body-2">{{ displayBill.billNo }}</div>
@@ -487,7 +487,7 @@
                 </div>
             </v-card-text>
             <v-divider></v-divider>
-            <v-card-actions class="pa-4 bg-grey-lighten-5 d-flex">
+            <v-card-actions class="pa-4 bg-background d-flex">
                 <v-btn variant="text" @click="previewDialog=false">Close</v-btn>
                 <v-spacer></v-spacer>
                  <v-btn 
@@ -507,24 +507,24 @@
         </v-card>
     </v-dialog>
 
-    <!-- Add Customer Dialog -->
-    <v-dialog v-model="showAddCustomer" max-width="450" transition="dialog-bottom-transition">
-      <v-card class="rounded-xl">
-        <v-card-title class="pa-4 pl-6 text-h6 font-weight-bold border-b">
-            Add New Customer
-        </v-card-title>
-        <v-card-text class="pa-6">
-          <v-text-field label="Full Name" v-model="newCustomer.name" variant="outlined" density="comfortable" class="mb-2" prepend-inner-icon="mdi-account"></v-text-field>
-          <v-text-field label="Mobile Number" v-model="newCustomer.mobile" variant="outlined" density="comfortable" class="mb-2" prepend-inner-icon="mdi-phone"></v-text-field>
-          <v-textarea label="Address" v-model="newCustomer.address" variant="outlined" density="comfortable" rows="3" prepend-inner-icon="mdi-map-marker"></v-textarea>
-        </v-card-text>
-        <v-card-actions class="pa-4 pr-6 border-t bg-grey-lighten-5">
-          <v-spacer></v-spacer>
-          <v-btn variant="text" color="grey-darken-1" @click="showAddCustomer=false" class="mr-2">Cancel</v-btn>
-          <v-btn color="secondary" variant="flat" rounded="lg" @click="createCustomer" class="px-6">Save Customer</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+     <!-- Add Customer Dialog -->
+     <v-dialog v-model="showAddCustomer" max-width="450" transition="dialog-bottom-transition">
+       <v-card class="rounded-xl bg-surface">
+         <v-card-title class="pa-4 pl-6 text-h6 font-weight-bold border-b text-secondary">
+             Add New Customer
+         </v-card-title>
+         <v-card-text class="pa-6">
+           <v-text-field label="Full Name" v-model="newCustomer.name" variant="outlined" density="comfortable" class="mb-2" prepend-inner-icon="mdi-account" color="secondary"></v-text-field>
+           <v-text-field label="Mobile Number" v-model="newCustomer.mobile" variant="outlined" density="comfortable" class="mb-2" prepend-inner-icon="mdi-phone" color="secondary"></v-text-field>
+           <v-textarea label="Address" v-model="newCustomer.address" variant="outlined" density="comfortable" rows="3" prepend-inner-icon="mdi-map-marker" color="secondary"></v-textarea>
+         </v-card-text>
+         <v-card-actions class="pa-4 pr-6 border-t bg-background">
+           <v-spacer></v-spacer>
+           <v-btn variant="text" color="secondary" @click="showAddCustomer=false" class="mr-2">Cancel</v-btn>
+           <v-btn color="secondary" variant="flat" rounded="lg" @click="createCustomer" class="px-6">Save Customer</v-btn>
+         </v-card-actions>
+       </v-card>
+     </v-dialog>
     
     <v-snackbar v-model="snackbar" :color="snackbarColor" location="top" rounded="pill" elevation="4">
         <v-icon start icon="mdi-check-circle" v-if="snackbarColor==='success'"></v-icon>
@@ -929,17 +929,51 @@ export default {
 </script>
 
 <style scoped>
+.bg-secondary-lighten-5 {
+    background-color: rgba(var(--v-theme-secondary), 0.08) !important;
+}
+
+.modern-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 24px !important;
+}
+
+.modern-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -10px rgba(var(--v-theme-secondary), 0.2) !important;
+}
+
+.border-thin {
+    border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+}
+
+.hover-card {
+    transition: all 0.2s ease;
+}
+
+.hover-card:hover {
+    background-color: rgba(var(--v-theme-secondary), 0.05) !important;
+    border-color: rgb(var(--v-theme-secondary)) !important;
+}
+
 .bg-gradient-gold {
-     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
 }
+
 .gradient-text {
-     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
-     -webkit-background-clip: text;
-     background-clip: text;
-     -webkit-text-fill-color: transparent;
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
+
 .border-dashed {
     border-style: dashed !important;
+}
+
+.hover-red:hover {
+    color: rgb(var(--v-theme-error)) !important;
 }
 
 @media print {
@@ -955,39 +989,22 @@ export default {
         top: 0;
         width: 100%;
         margin: 0;
-        padding: 20px !important; /* Ensure some padding but not too much */
+        padding: 20px !important;
         background: white !important;
-        color: black !important; /* Force black text for clarity */
+        color: black !important;
     }
-    
-    /* Hide shadows and borders that look bad in print */
+    .v-application, .v-main {
+        background: white !important;
+    }
     .elevation-2, .elevation-3, .elevation-10 {
         box-shadow: none !important;
     }
     .v-card {
         border: none !important;
     }
-    
-    /* Ensure dashed lines print correctly */
     .border-dashed {
         border-style: dashed !important;
         border-color: #000 !important;
-    }
-
-    .v-overlay__scrim {
-        display: none !important; /* Hide background dimming */
-    }
-    
-    .v-overlay__content {
-        display: block !important; /* Ensure content wrapper is visible */
-        position: static !important; /* Reset positioning context */
-        width: 100% !important;
-        height: 100% !important;
-    }
-    
-    @page {
-        size: auto;
-        margin: 0mm;
     }
 }
 </style>
