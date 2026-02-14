@@ -3,37 +3,53 @@
     <v-card class="rounded-xl elevation-10 bg-surface border-thin w-100">
       <div class="card-header-glow"></div>
       
-      <!-- Toolbar -->
-      <v-toolbar color="transparent" class="px-6 pt-6 mb-4">
+      <!-- Page Header -->
+      <div class="px-6 pt-6 pb-4 d-flex flex-wrap align-center justify-space-between gap-3">
+        <div class="d-flex align-center">
           <v-avatar color="secondary" variant="tonal" size="48" class="mr-4 rounded-lg">
              <v-icon color="secondary" size="28">mdi-shape</v-icon>
           </v-avatar>
           <div>
-             <v-toolbar-title class="text-h5 font-weight-black text-grey-darken-3">Category Management</v-toolbar-title>
-             <div class="text-caption text-grey font-weight-medium">Organize your product catalog</div>
+             <h1 class="text-h5 font-weight-black text-secondary">Category Management</h1>
+             <div class="text-caption text-secondary opacity-70 font-weight-medium">Organize your product catalog</div>
           </div>
-          <v-spacer></v-spacer>
-          <v-btn 
-            color="primary" 
-            prepend-icon="mdi-plus" 
-            rounded="lg" 
-            elevation="2" 
-            height="44"
-            class="text-capitalize font-weight-bold"
-            @click="dialog = true"
-          >
-            New Category
-          </v-btn>
-      </v-toolbar>
+        </div>
+        <v-btn 
+          color="primary" 
+          prepend-icon="mdi-plus" 
+          rounded="lg" 
+          elevation="2" 
+          class="text-capitalize font-weight-bold ml-auto mt-2 mt-sm-0"
+          @click="dialog = true"
+        >
+          New Category
+        </v-btn>
+      </div>
 
       <!-- Data Table -->
       <v-data-table 
         :headers="headers" 
         :items="categories" 
         :loading="loading" 
+        :search="search"
         class="bg-transparent px-6 pb-6"
         hover
       >
+        <template v-slot:top>
+          <div class="px-4 py-3 d-flex align-center bg-surface border-b rounded-t-xl w-100">
+            <v-text-field
+              v-model="search"
+              prepend-inner-icon="mdi-magnify"
+              placeholder="Search categories..."
+              variant="outlined"
+              hide-details
+              density="compact"
+              bg-color="background"
+              rounded="lg"
+              class="w-100"
+            ></v-text-field>
+          </div>
+        </template>
         <template v-slot:item.name="{ item }">
             <div class="font-weight-bold text-body-1 text-grey-darken-3">{{ item.name }}</div>
         </template>
@@ -50,7 +66,7 @@
     <v-dialog v-model="dialog" max-width="500px">
       <v-card class="rounded-xl">
         <v-toolbar color="primary" class="px-4">
-             <v-toolbar-title class="text-h6 font-weight-bold text-white">Add New Category</v-toolbar-title>
+             <v-toolbar-title class="text-h6 font-weight-bold">Add New Category</v-toolbar-title>
              <v-btn icon dark @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
         </v-toolbar>
         <v-card-text class="pa-6">
@@ -82,6 +98,7 @@ export default {
       ],
       dialog: false,
       saving: false,
+      search: '',
       newCategory: {
         name: '',
         description: ''
