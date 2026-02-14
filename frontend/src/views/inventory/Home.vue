@@ -2,7 +2,7 @@
   <v-container fluid class="pa-6">
     <!-- Header -->
     <div class="mb-6">
-      <h1 class="text-h4 font-weight-bold text-primary">Welcome Back, {{ user?.username || 'Inventory Manager' }}</h1>
+      <h1 class="text-h4 font-weight-bold text-secondary">Welcome Back, {{ user?.username || 'Inventory Manager' }}</h1>
       <p class="text-subtitle-1 text-medium-emphasis">Manage your stock and products efficiently.</p>
     </div>
 
@@ -12,8 +12,8 @@
         <v-card class="rounded-xl pa-4 h-100 bg-surface elevation-2" border>
             <div class="d-flex align-center justify-space-between mb-2">
                 <div class="text-subtitle-1 text-medium-emphasis">Total Products</div>
-                <v-avatar color="primary" variant="tonal" rounded>
-                    <v-icon color="primary">mdi-package-variant</v-icon>
+                <v-avatar color="secondary" variant="tonal" rounded>
+                    <v-icon color="secondary">mdi-package-variant</v-icon>
                 </v-avatar>
             </div>
             <div class="text-h3 font-weight-bold">{{ totalProducts }}</div>
@@ -54,7 +54,7 @@
         <v-row>
              <v-col cols="12" sm="6" md="3">
                 <v-card to="/inventory/stock" link hover class="rounded-lg pa-4 elevation-1 text-center" border>
-                    <v-icon size="32" color="primary" class="mb-2">mdi-plus-box-outline</v-icon>
+                    <v-icon size="32" color="secondary" class="mb-2">mdi-plus-box-outline</v-icon>
                     <div class="font-weight-medium">Add Stock</div>
                 </v-card>
              </v-col>

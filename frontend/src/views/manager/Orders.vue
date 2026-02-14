@@ -2,33 +2,36 @@
   <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
     <div class="d-flex justify-space-between w-100 align-center mb-6">
         <div>
-            <h1 class="text-h4 font-weight-black text-grey-darken-3">Customer Orders</h1>
+            <h1 class="text-h4 font-weight-black gradient-text">Customer Orders</h1>
             <div class="text-subtitle-1 text-grey-darken-1">Track and manage incoming orders</div>
         </div>
         <v-card class="d-flex align-center px-4 py-2 rounded-pill bg-white border-thin elevation-0">
-             <v-icon color="primary" class="mr-2">mdi-clipboard-list-outline</v-icon>
-             <span class="font-weight-bold text-primary">{{ orders.length }} Orders</span>
+             <v-icon color="secondary" class="mr-2">mdi-clipboard-list-outline</v-icon>
+             <span class="font-weight-bold text-secondary">{{ orders.length }} Orders</span>
         </v-card>
     </div>
 
-    <v-card class="w-100 rounded-xl elevation-0 border-thin bg-transparent flex-grow-1 d-flex flex-column">
+    <v-card class="w-100 rounded-xl elevation-0 border-thin bg-transparent" style="overflow-x: auto;">
       <v-data-table
         :headers="headers"
         :items="orders"
         :loading="loading"
         :search="search"
-        class="rounded-xl elevation-1 bg-white flex-grow-1"
+        class="rounded-xl elevation-1 bg-white"
         hover
+        mobile-breakpoint="0"
       >
         <template v-slot:top>
             <div class="px-4 py-3 d-flex align-center bg-white border-b">
                 <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
-                <input 
+                <v-text-field
                     v-model="search"
                     placeholder="Search orders, customers..."
-                    class="flex-grow-1 text-body-1"
-                    style="outline: none;"
-                />
+                    variant="plain"
+                    hide-details
+                    density="compact"
+                    class="text-body-1 w-100"
+                ></v-text-field>
             </div>
         </template>
 
@@ -61,7 +64,7 @@
                     </div>
                 </td>
                 <td class="py-4">
-                    <div class="text-body-2 font-weight-bold">₹{{ item.total_estimated.toFixed(2) }}</div>
+                    <div class="text-body-2 font-weight-bold">₹{{ parseFloat(item.total_estimated || 0).toFixed(2) }}</div>
                     <div class="text-caption text-grey">{{ item.items ? item.items.length : 0 }} items</div>
                 </td>
                 <td class="py-4">
@@ -151,7 +154,13 @@ export default {
 
 <style scoped>
 .border-thin { border: 1px solid rgba(0,0,0,0.08); }
-.hover-bg-grey-lighten-5:hover {
-    background-color: #FAFAFA !important;
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
+.gradient-text {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 </style>

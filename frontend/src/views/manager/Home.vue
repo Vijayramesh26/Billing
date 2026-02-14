@@ -3,11 +3,11 @@
     <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row justify-space-between align-start align-md-center mb-8">
         <div>
-            <h1 class="text-h4 font-weight-bold text-grey-darken-3">Welcome Back, {{ user?.username || 'Manager' }}</h1>
+            <h1 class="text-h4 font-weight-bold text-secondary">Welcome Back, {{ user?.username || 'Manager' }}</h1>
             <p class="text-subtitle-1 text-grey-darken-1 mt-1 font-weight-medium">Here's what's happening with your store today.</p>
         </div>
         <div class="d-flex align-center bg-white rounded-pill px-4 py-2 elevation-1 mt-4 mt-md-0">
-            <v-icon color="primary" class="mr-2">mdi-calendar-today</v-icon>
+            <v-icon color="secondary" class="mr-2">mdi-calendar-today</v-icon>
             <span class="text-body-2 font-weight-bold text-grey-darken-3">{{ currentDate }}</span>
         </div>
     </div>
@@ -19,7 +19,7 @@
         <v-card class="rounded-xl elevation-0 border-thin d-flex align-center pa-5 bg-white modern-card h-100">
            <div class="d-flex flex-column justify-center flex-grow-1">
               <div class="text-caption font-weight-bold text-grey text-uppercase mb-2">Today's Revenue</div>
-              <div class="text-h4 font-weight-black text-grey-darken-3">₹{{ metrics.todayRevenue.toLocaleString() }}</div>
+              <div class="text-h4 font-weight-black text-secondary">₹{{ metrics.todayRevenue.toLocaleString() }}</div>
               <div class="d-flex align-center mt-2">
                   <v-chip size="x-small" color="success" variant="flat" class="font-weight-bold px-2">
                     <v-icon start icon="mdi-arrow-up" size="x-small"></v-icon> +12%
@@ -27,8 +27,8 @@
                   <span class="text-caption text-grey ml-2">vs yesterday</span>
               </div>
            </div>
-           <v-avatar color="blue-lighten-5" size="56" class="rounded-xl ml-2">
-              <v-icon color="blue-darken-1" size="28">mdi-currency-inr</v-icon>
+           <v-avatar color="amber-lighten-5" size="56" class="rounded-xl ml-2">
+              <v-icon color="secondary" size="28">mdi-currency-inr</v-icon>
            </v-avatar>
         </v-card>
       </v-col>
@@ -51,7 +51,7 @@
       
       <!-- Action Card: Reports -->
       <v-col cols="12" md="4">
-         <v-card class="rounded-xl elevation-3 border-none d-flex align-center pa-5 bg-gradient-purple hover-card h-100 text-white" to="/manager" link shadow="lg">
+         <v-card class="rounded-xl elevation-3 border-none d-flex align-center pa-5 bg-gradient-gold hover-card h-100 text-white" to="/manager" link shadow="lg">
            <div class="d-flex flex-column justify-center flex-grow-1">
               <div class="text-subtitle-2 font-weight-medium text-white mb-1 opacity-80">Analytics</div>
               <div class="text-h5 font-weight-bold">View Reports</div>
@@ -324,6 +324,10 @@ export default {
 .text-white {
     color: white !important;
 }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+}
+
 .opacity-80 {
     opacity: 0.8;
 }

@@ -12,7 +12,12 @@ const apiClient = axios.create({
 // Request interceptor to add token and show loader
 apiClient.interceptors.request.use(config => {
     const loaderStore = useLoaderStore()
-    loaderStore.show()
+    
+    // Check if current route is NOT a shop route AND skipGlobalLoader is not set
+    if (!window.location.pathname.startsWith('/shop') && !config.skipGlobalLoader) {
+        loaderStore.show()
+        config.triggerGlobalLoader = true
+    }
     
     const token = localStorage.getItem('token')
     if (token) {
@@ -21,6 +26,12 @@ apiClient.interceptors.request.use(config => {
     return config
 }, error => {
     const loaderStore = useLoaderStore()
+    // We can't easily access config here to check triggerGlobalLoader, 
+    // but hiding it is generally safe as the store handles the counter.
+    // However, to be strict, we might want to avoid it, but for error cases 
+    // it's better to ensure it's hidden if it was shown.
+    // Since we can't know for sure if it was shown without config, 
+    // we'll rely on the store's robustness (decrementing 0 stays 0).
     loaderStore.hide()
     return Promise.reject(error)
 })
@@ -28,7 +39,9 @@ apiClient.interceptors.request.use(config => {
 // Response interceptor to hide loader
 apiClient.interceptors.response.use(response => {
     const loaderStore = useLoaderStore()
-    loaderStore.hide()
+    if (response.config.triggerGlobalLoader) {
+        loaderStore.hide()
+    }
     return response
 }, error => {
     const loaderStore = useLoaderStore()
@@ -167,13 +180,22 @@ export default {
         return apiClient.get('/admin/employees')
     },
     addEmployee(employeeData) {
-        return apiClient.post('/admin/employees', employeeData)
+        return apiClient.post('/admin/employees', employeeData, { skipGlobalLoader: true })
+    },
+    resetEmployeePassword(id, password) {
+        return apiClient.put(`/admin/employees/${id}/password`, { password }, { skipGlobalLoader: true })
+    },
+    changePassword(password) {
+        return apiClient.put('/admin/me/password', { password }, { skipGlobalLoader: true })
     },
     updateEmployeeStatus(id, status) {
-        return apiClient.put(`/admin/employees/${id}/status`, status)
+        return apiClient.put(`/admin/employees/${id}/status`, status, { skipGlobalLoader: true })
     },
     updateEmployeeRole(id, role) {
-        return apiClient.put(`/admin/employees/${id}/role`, role)
+        return apiClient.put(`/admin/employees/${id}/role`, role, { skipGlobalLoader: true })
+    },
+    updateEmployee(id, employeeData) {
+        return apiClient.put(`/admin/employees/${id}`, employeeData, { skipGlobalLoader: true })
     },
     getLoginHistory() {
         return apiClient.get('/admin/login-history')

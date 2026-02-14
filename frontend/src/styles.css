@@ -16,6 +16,13 @@ body {
   font-family: var(--font-primary);
   background-color: var(--surface-color);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  width: 100%;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 h1,

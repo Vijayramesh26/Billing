@@ -19,7 +19,7 @@
                     :to="item.to"
                     variant="text"
                     rounded="lg"
-                    :color="$route.path === item.to ? 'primary' : 'grey-darken-1'"
+                    :color="$route.path === item.to ? 'secondary' : 'grey-darken-1'"
                     class="text-capitalize font-weight-medium"
                 >
                     <v-icon start size="small">{{ item.icon }}</v-icon>
@@ -63,6 +63,10 @@ import EventServices from '../../services/EventServices'
 
 export default {
   name: 'InventoryDashboard',
+  setup() {
+    const { mobile } = useDisplay()
+    return { mobile }
+  },
   data() {
     return {
       companyName: 'Inventory Dashboard',
@@ -78,10 +82,6 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ['user']),
-    mobile() {
-      const { mobile } = useDisplay()
-      return mobile.value
-    }
   },
   async mounted() {
     try {

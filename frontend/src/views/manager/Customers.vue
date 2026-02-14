@@ -1,11 +1,11 @@
 <template>
   <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
-    <div class="d-flex justify-space-between w-100 align-center mb-6">
-        <div>
-            <h1 class="text-h4 font-weight-black text-grey-darken-3">Customer Management</h1>
+    <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
+        <div class="mb-4 mb-md-0">
+            <h1 class="text-h4 font-weight-black text-secondary">Customer Management</h1>
             <div class="text-subtitle-1 text-grey-darken-1">Manage customer profiles and special discounts</div>
         </div>
-        <v-btn prepend-icon="mdi-account-plus" color="primary" rounded="lg" size="large" elevation="2">New Customer</v-btn>
+        <v-btn prepend-icon="mdi-account-plus" class="bg-gradient-gold text-white align-self-stretch align-self-sm-auto" rounded="lg" size="large" elevation="2">New Customer</v-btn>
     </div>
 
     <!-- Top Buys Cards -->
@@ -20,7 +20,7 @@
                     <div>
                         <div class="text-body-1 font-weight-bold text-grey-darken-3">{{ customer.name }}</div>
                         <div class="text-caption text-grey font-weight-bold text-uppercase">Total Spend</div>
-                        <div class="text-h6 font-weight-black text-primary">₹{{ customer.total_spend.toLocaleString() }}</div>
+                        <div class="text-h6 font-weight-black text-secondary">₹{{ customer.total_spend.toLocaleString() }}</div>
                     </div>
                 </div>
             </v-card>
@@ -29,15 +29,17 @@
 
     <v-card class="w-100 rounded-xl elevation-0 border-thin bg-transparent">
       <!-- Search Toolbar -->
-      <div class="px-4 py-3 d-flex align-center bg-white border-b rounded-t-xl">
+      <div class="px-4 py-3 d-flex align-center bg-white border-b rounded-t-xl w-100">
           <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
-            <input 
-                v-model="search"
-                placeholder="Search by Name or Mobile..."
-                class="flex-grow-1 text-body-1"
-                style="outline: none;"
-            />
-          <v-chip color="primary" variant="tonal" class="font-weight-bold ml-4" size="small">Total: {{ customers.length }}</v-chip>
+          <v-text-field
+              v-model="search"
+              placeholder="Search by Name or Mobile..."
+              variant="plain"
+              hide-details
+              density="compact"
+              class="text-body-1 w-100"
+          ></v-text-field>
+          <v-chip color="secondary" variant="tonal" class="font-weight-bold ml-4" size="small">Total: {{ customers.length }}</v-chip>
       </div>
 
       <!-- Data Table -->
@@ -208,7 +210,7 @@ export default {
         return name.includes(q) || mobile.includes(q)
     },
     getRankColor(index) {
-        if (index === 0) return 'amber-darken-2' // Gold
+        if (index === 0) return 'secondary' // Gold
         if (index === 1) return 'blue-grey-lighten-1' // Silver
         if (index === 2) return 'brown-lighten-1' // Bronze
         return 'grey'
@@ -268,4 +270,7 @@ export default {
 }
 .relative { position: relative; }
 .z-1 { z-index: 1; }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
 </style>

@@ -18,6 +18,7 @@ type CreateEmployeeRequest struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 	RoleID   uint   `json:"role_id" binding:"required"`
+	Mobile   string `json:"mobile"`
 }
 
 func (h *AdminHandler) CreateEmployee(c *gin.Context) {
@@ -41,6 +42,7 @@ func (h *AdminHandler) CreateEmployee(c *gin.Context) {
 		PasswordHash: hashedPassword,
 		RoleID:       req.RoleID,
 		EmployeeID:   empID,
+		Mobile:       req.Mobile,
 		IsActive:     true,
 	}
 
@@ -94,6 +96,29 @@ func (h *AdminHandler) UpdateEmployeeStatus(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Status updated successfully"})
+}
+
+func (h *AdminHandler) UpdateEmployee(c *gin.Context) {
+	id := c.Param("id")
+	var req struct {
+		Username string `json:"username" binding:"required"`
+		Mobile   string `json:"mobile"`
+		RoleID   uint   `json:"role_id"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := database.DB.Model(&models.User{}).Where("id = ?", id).Updates(map[string]interface{}{
+		"username": req.Username,
+		"mobile":   req.Mobile,
+		"role_id":  req.RoleID,
+	}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update employee"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Employee updated successfully"})
 }
 
 func (h *AdminHandler) ResetEmployeePassword(c *gin.Context) {

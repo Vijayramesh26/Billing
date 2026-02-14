@@ -1,6 +1,7 @@
 package config
 
 import (
+	"billing-app/internal/models"
 	"log"
 
 	"github.com/spf13/viper"
@@ -10,6 +11,7 @@ type Config struct {
 	Server   ServerConfig
 	Database DatabaseConfig
 	Defaults DefaultsConfig
+	Site     models.SiteInfo
 }
 
 type ServerConfig struct {
@@ -82,6 +84,18 @@ func LoadConfig() {
 			CompanyAddress:  viper.GetString("COMPANY_ADDRESS"),
 			CompanyPhone:    viper.GetString("COMPANY_PHONE"),
 		},
+	}
+
+	// Load TOML Config for Site Info
+	siteViper := viper.New()
+	siteViper.SetConfigFile("config/config.toml")
+	siteViper.SetConfigType("toml")
+	if err := siteViper.ReadInConfig(); err != nil {
+		log.Printf("Warning: config/config.toml not found, using empty site info: %v", err)
+	} else {
+		if err := siteViper.UnmarshalKey("site", &AppConfig.Site); err != nil {
+			log.Printf("Error: Failed to unmarshal site info from TOML: %v", err)
+		}
 	}
 
 	// Set defaults if missing (optional safety)

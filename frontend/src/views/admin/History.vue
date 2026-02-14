@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
     <div class="mb-6 w-100">
-        <h1 class="text-h4 font-weight-black text-grey-darken-3">Access Logs</h1>
+        <h1 class="text-h4 font-weight-black gradient-text">Access Logs</h1>
         <div class="text-subtitle-1 text-grey-darken-1">Monitor system login activity</div>
     </div>
 
@@ -15,14 +15,16 @@
         hover
       >
         <template v-slot:top>
-            <div class="px-4 py-3 d-flex align-center bg-white border-b">
+            <div class="px-4 py-3 d-flex align-center bg-white border-b w-100">
                 <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
-                <input 
+                <v-text-field
                     v-model="search"
                     placeholder="Search logs..."
-                    class="flex-grow-1 text-body-1"
-                    style="outline: none;"
-                />
+                    variant="plain"
+                    hide-details
+                    density="compact"
+                    class="text-body-1 w-100"
+                ></v-text-field>
             </div>
         </template>
 
@@ -101,3 +103,16 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
+.gradient-text {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+</style>

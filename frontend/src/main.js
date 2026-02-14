@@ -21,7 +21,12 @@ app.use(router)
 // Add Axios Interceptor to inject token and handle loader
 axios.interceptors.request.use(config => {
   const loaderStore = useLoaderStore()
-  loaderStore.show()
+  
+  // Check if current route is NOT a shop route
+  if (!window.location.pathname.startsWith('/shop')) {
+      loaderStore.show()
+      config.triggerGlobalLoader = true
+  }
 
   const token = localStorage.getItem('token')
   if (token) {
@@ -36,7 +41,9 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(response => {
   const loaderStore = useLoaderStore()
-  loaderStore.hide()
+  if (response.config.triggerGlobalLoader) {
+      loaderStore.hide()
+  }
   return response
 }, error => {
   const loaderStore = useLoaderStore()

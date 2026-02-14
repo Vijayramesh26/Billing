@@ -69,16 +69,16 @@ export default {
         drawer: { type: Boolean, default: true }
     },
     emits: ['update:drawer', 'logout'],
+    setup() {
+        const { mobile } = useDisplay()
+        return { mobile }
+    },
     data() {
         return {
             rail: false
         }
     },
     computed: {
-        mobile() {
-            const { mobile } = useDisplay()
-            return mobile.value
-        }
     }
 }
 </script>

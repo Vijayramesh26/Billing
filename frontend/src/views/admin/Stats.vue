@@ -1,35 +1,35 @@
 <template>
   <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
     <div class="mb-8 w-100">
-        <h1 class="text-h4 font-weight-black text-grey-darken-3">Welcome Back, {{ user?.username || 'Admin' }}</h1>
+        <h1 class="text-h4 font-weight-black gradient-text">Welcome Back, {{ user?.username || 'Admin' }}</h1>
         <div class="text-subtitle-1 text-grey-darken-1">System status and user metrics</div>
     </div>
 
     <!-- Stats Cards -->
     <v-row class="w-100 mb-6">
       <v-col cols="12" md="4">
-        <v-card class="rounded-xl elevation-2 overflow-hidden bg-white" height="100%">
+        <v-card class="rounded-xl border-thin elevation-0 overflow-hidden bg-white" height="100%">
             <div class="d-flex flex-row h-100">
-                <div class="bg-blue-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
-                    <v-icon color="blue-darken-2" size="48">mdi-account-group</v-icon>
+                <div class="bg-amber-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
+                    <v-icon color="secondary" size="48">mdi-account-group</v-icon>
                 </div>
                 <div class="pa-4 d-flex flex-column justify-center flex-grow-1">
                     <div class="text-caption font-weight-bold text-uppercase text-grey mb-1">Total Employees</div>
-                    <div class="text-h3 font-weight-black text-grey-darken-3">{{ stats.total_employees }}</div>
+                    <div class="text-h3 font-weight-black text-secondary">{{ stats.total_employees }}</div>
                 </div>
             </div>
         </v-card>
       </v-col>
       
       <v-col cols="12" md="4">
-        <v-card class="rounded-xl elevation-2 overflow-hidden bg-white" height="100%">
+        <v-card class="rounded-xl border-thin elevation-0 overflow-hidden bg-white" height="100%">
             <div class="d-flex flex-row h-100">
-                <div class="bg-green-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
-                    <v-icon color="green-darken-2" size="48">mdi-account-check</v-icon>
+                <div class="bg-amber-lighten-5 d-flex align-center justify-center pa-4" style="width: 100px;">
+                    <v-icon color="secondary" size="48">mdi-account-check</v-icon>
                 </div>
                 <div class="pa-4 d-flex flex-column justify-center flex-grow-1">
                     <div class="text-caption font-weight-bold text-uppercase text-grey mb-1">Active Users</div>
-                    <div class="text-h3 font-weight-black text-grey-darken-3">{{ stats.active_users }}</div>
+                    <div class="text-h3 font-weight-black text-secondary">{{ stats.active_users }}</div>
                 </div>
             </div>
         </v-card>
@@ -118,4 +118,13 @@ export default {
 <style scoped>
 .border-thin { border: 1px solid rgba(0,0,0,0.08); }
 .border-dashed { border-style: dashed; border-color: rgba(0,0,0,0.1); }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
+.gradient-text {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 </style>

@@ -1,43 +1,42 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6">
-    <v-row class="fill-height">
-
-      <v-col cols="12">
-        <div class="d-flex justify-space-between align-center mb-6">
-            <div>
-                <h1 class="text-h4 font-weight-black text-grey-darken-3">Product Inventory</h1>
-                <div class="text-subtitle-1 text-grey-darken-1">Manage stock levels and product details</div>
-            </div>
-            <v-btn 
-                v-if="canAddProduct"
-                color="primary" 
-                prepend-icon="mdi-plus" 
-                size="large" 
-                class="text-capitalize rounded-lg elevation-4"
-                @click="dialog = true"
-            >
-                Add New Product
-            </v-btn>
+  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+    <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
+        <div class="mb-4 mb-md-0">
+            <h1 class="text-h4 font-weight-black text-secondary">Product Inventory</h1>
+            <div class="text-subtitle-1 text-grey-darken-1">Manage stock levels and product details</div>
         </div>
+        <v-btn 
+            v-if="canAddProduct"
+            class="bg-gradient-gold text-white text-capitalize rounded-lg elevation-4 align-self-start align-self-sm-auto mt-2 mt-md-0"
+            prepend-icon="mdi-plus" 
+            :size="mobile ? 'small' : 'large'"
+            @click="dialog = true"
+        >
+            Add New Product
+        </v-btn>
+    </div>
 
-        <v-card class="border-0 elevation-0 rounded-xl bg-transparent">
-          <v-data-table 
-            :headers="headers" 
-            :items="products" 
-            :loading="loading" 
-            search
-            class="rounded-xl elevation-1 bg-white"
-            hover
-          >
+    <v-card class="w-100 rounded-xl elevation-0 border-thin bg-transparent" style="overflow-x: auto;">
+      <v-data-table 
+        :headers="headers" 
+        :items="products" 
+        :loading="loading" 
+        search
+        class="rounded-xl elevation-1 bg-white"
+        hover 
+        mobile-breakpoint="0"
+      >
             <template v-slot:top>
-                <div class="px-4 py-3 d-flex align-center bg-white border-b">
+                <div class="px-4 py-3 d-flex align-center bg-white border-b rounded-t-xl w-100">
                     <v-icon color="grey-lighten-1" class="mr-3">mdi-magnify</v-icon>
-                    <input 
+                    <v-text-field
                         v-model="search"
                         placeholder="Search products..."
-                        class="flex-grow-1 text-body-1"
-                        style="outline: none;"
-                    />
+                        variant="plain"
+                        hide-details
+                        density="compact"
+                        class="text-body-1 w-100"
+                    ></v-text-field>
                 </div>
             </template>
 
@@ -51,17 +50,17 @@
             
             <template v-slot:item="{ item }">
                 <tr class="hover-bg-grey-lighten-5 transition-swing">
-                    <td class="py-3">
+                    <td class="py-4">
                         <div class="font-weight-bold text-body-2 text-grey-darken-3">{{ item.name }}</div>
                         <div class="text-caption text-grey">{{ item.brand ? item.brand.name : '' }}</div>
                     </td>
-                    <td class="py-3">
+                    <td class="py-4">
                         <div class="text-caption text-grey">{{ item.brand ? item.brand.name : '-' }}</div>
                     </td>
-                    <td class="py-3">
+                    <td class="py-4 text-right">
                          <span class="font-weight-bold text-body-2 text-grey-darken-3">₹{{ item.unit_price }}</span>
                     </td>
-                    <td class="py-3">
+                    <td class="py-4 text-center">
                         <v-chip
                             :color="item.current_stock <= item.low_stock_threshold ? 'error' : 'success'"
                             variant="tonal"
@@ -75,8 +74,8 @@
                             {{ item.current_stock }}
                         </v-chip>
                     </td>
-                    <td class="py-3">
-                        <div class="d-flex align-center text-caption text-grey-darken-1 font-family-monospace bg-grey-lighten-4 px-2 py-1 rounded d-inline-block">
+                    <td class="py-4 text-right">
+                        <div class="d-flex align-center justify-end text-caption text-grey-darken-1 font-family-monospace bg-grey-lighten-4 px-2 py-1 rounded d-inline-block">
                              <v-icon start size="x-small" class="mr-1">mdi-barcode</v-icon>
                              {{ item.barcode }}
                         </div>
@@ -85,10 +84,8 @@
             </template>
 
 
-          </v-data-table>
-        </v-card>
-      </v-col>
-    </v-row>
+      </v-data-table>
+    </v-card>
 
     <v-dialog v-model="dialog" max-width="700px" transition="dialog-bottom-transition">
       <v-card class="rounded-xl">
@@ -175,17 +172,22 @@
 import { mapState } from 'pinia'
 import EventServices from '../../services/EventServices'
 import { useAuthStore } from '../../stores/auth'
+import { useDisplay } from 'vuetify'
 
 export default {
   name: 'StockView',
+  setup() {
+    const { mobile } = useDisplay()
+    return { mobile }
+  },
   data() {
     return {
       headers: [
         { title: 'Name', key: 'name' },
-        { title: 'Brand', key: 'brand.name' },
-        { title: 'Price', key: 'unit_price' },
-        { title: 'Stock', key: 'current_stock' },
-        { title: 'Barcode', key: 'barcode' },
+        { title: 'Brand', key: 'brand.name', align: 'start' },
+        { title: 'Price', key: 'unit_price', align: 'end' },
+        { title: 'Stock', key: 'current_stock', align: 'center' },
+        { title: 'Barcode', key: 'barcode', align: 'end' },
       ],
       products: [],
       loading: false,
@@ -230,3 +232,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
+.border-thin { border: 1px solid rgba(0,0,0,0.08); }
+</style>

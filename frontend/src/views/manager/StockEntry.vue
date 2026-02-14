@@ -3,11 +3,11 @@
     <v-card width="600" class="rounded-xl elevation-10 modern-card bg-white border-thin overflow-visible">
       <div class="card-header-glow"></div>
       <v-toolbar color="transparent" class="px-6 pt-6 mb-2">
-          <v-avatar color="primary" variant="tonal" size="48" class="mr-4 rounded-lg">
-             <v-icon color="primary" size="28">mdi-package-variant-plus</v-icon>
+          <v-avatar color="amber-lighten-5" variant="tonal" size="48" class="mr-4 rounded-lg">
+             <v-icon color="secondary" size="28">mdi-package-variant-plus</v-icon>
           </v-avatar>
           <div>
-             <v-toolbar-title class="text-h5 font-weight-black text-grey-darken-3">Stock Entry</v-toolbar-title>
+             <v-toolbar-title class="text-h5 font-weight-black text-grey-darken-3">Update Stock</v-toolbar-title>
              <div class="text-caption text-grey font-weight-medium">Update inventory levels</div>
           </div>
       </v-toolbar>
@@ -81,7 +81,7 @@
             ></v-text-field>
 
             <v-btn 
-                color="primary" 
+                class="bg-gradient-gold text-white" 
                 size="x-large" 
                 rounded="lg" 
                 elevation="2" 
@@ -164,4 +164,7 @@ export default {
 }
 .gap-4 { gap: 16px; }
 .border-thin { border: 1px solid rgba(0,0,0,0.08); }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
 </style>

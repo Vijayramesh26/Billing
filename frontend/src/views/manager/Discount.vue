@@ -2,15 +2,15 @@
   <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
     <div class="d-flex justify-space-between w-100 align-center mb-6">
         <div>
-            <h1 class="text-h4 font-weight-black text-grey-darken-3">Global Discount Settings</h1>
+            <h1 class="text-h4 font-weight-black text-secondary">Global Discount Settings</h1>
             <div class="text-subtitle-1 text-grey-darken-1">Manage store-wide discount policies</div>
         </div>
     </div>
 
     <v-card class="w-100 rounded-xl elevation-0 border-thin bg-white pa-8" style="max-width: 600px; margin: 0 auto">
        <div class="d-flex align-center mb-6">
-           <div class="bg-primary-lighten-5 pa-4 rounded-circle mr-4">
-               <v-icon color="primary" size="32">mdi-ticket-percent</v-icon>
+           <div class="bg-amber-lighten-5 pa-4 rounded-circle mr-4">
+               <v-icon color="secondary" size="32">mdi-ticket-percent</v-icon>
            </div>
            <div>
                <div class="text-h6 font-weight-bold text-grey-darken-3">Store-wide Discount</div>
@@ -22,7 +22,7 @@
 
        <div class="bg-grey-lighten-5 pa-6 rounded-xl mb-6 text-center border-thin">
            <div class="text-caption font-weight-bold text-uppercase text-grey-darken-1 mb-2">Current Active Discount</div>
-           <div class="text-h2 font-weight-black text-primary">{{ currentDiscount }}%</div>
+           <div class="text-h2 font-weight-black text-secondary">{{ currentDiscount }}%</div>
        </div>
 
        <label class="text-caption font-weight-bold text-uppercase text-grey mb-2 d-block">Set New Discount Percentage</label>
@@ -40,7 +40,7 @@
 
        <v-btn 
             block 
-            color="primary" 
+            class="bg-gradient-gold text-white" 
             size="x-large" 
             rounded="lg" 
             elevation="2" 
@@ -217,4 +217,7 @@ export default {
 }
 .border-thin { border: 1px solid rgba(0,0,0,0.08); }
 .border-dashed { border-style: dashed; border-color: rgba(0,0,0,0.1); }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
 </style>

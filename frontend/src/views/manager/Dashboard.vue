@@ -19,7 +19,7 @@
                     :to="item.to"
                     variant="text"
                     rounded="lg"
-                    :color="$route.path === item.to ? 'primary' : 'grey-darken-1'"
+                    :color="$route.path === item.to ? 'secondary' : 'grey-darken-1'"
                     class="text-capitalize font-weight-medium"
                 >
                     <v-icon start size="small">{{ item.icon }}</v-icon>
@@ -46,7 +46,7 @@
     </v-main>
 
     <!-- Bottom Navigation (Mobile Only) -->
-    <v-bottom-navigation v-if="mobile" app grow color="primary" bg-color="surface" elevation="10" style="z-index: 2000;">
+    <v-bottom-navigation v-if="mobile" app grow color="secondary" bg-color="surface" elevation="10" style="z-index: 2000;">
        <v-btn v-for="(item, i) in menuItems.slice(0, 5)" :key="i" :to="item.to">
           <v-icon>{{ item.icon }}</v-icon>
           <span class="text-caption" style="font-size: 10px !important">{{ item.title.split(' ')[0] }}</span>
@@ -63,6 +63,10 @@ import EventServices from '../../services/EventServices'
 
 export default {
   name: 'ManagerDashboard',
+  setup() {
+    const { mobile } = useDisplay()
+    return { mobile }
+  },
   data() {
     return {
       companyName: 'Manager Dashboard',
@@ -70,8 +74,8 @@ export default {
       menuItems: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/manager' },
         { title: 'Customers', icon: 'mdi-account-group', to: '/manager/customers' },
-        { title: 'Stock View', icon: 'mdi-package-variant', to: '/manager/stock' },
-        { title: 'Stock Entry', icon: 'mdi-package-variant-closed', to: '/manager/entry' },
+        { title: 'Inventory', icon: 'mdi-package-variant', to: '/manager/stock' },
+        { title: 'Update Stock', icon: 'mdi-package-variant-closed', to: '/manager/entry' },
         { title: 'Sales Reports', icon: 'mdi-chart-box', to: '/manager/reports' },
         { title: 'Discounts', icon: 'mdi-sale', to: '/manager/discount' },
         { title: 'Orders', icon: 'mdi-clipboard-list', to: '/manager/orders' },
@@ -80,10 +84,6 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ['user']),
-    mobile() {
-      const { mobile } = useDisplay()
-      return mobile.value
-    }
   },
   async mounted() {
     try {

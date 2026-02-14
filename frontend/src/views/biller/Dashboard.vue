@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background fill-height">
     <!-- Top App Bar (Always Visible) -->
-    <v-app-bar app color="surface" elevation="1" class="px-md-4">
+    <v-app-bar app color="surface" elevation="0" class="px-md-4 border-b">
         <div v-if="companyLogo" class="d-flex align-center mr-3 cursor-pointer select-none" style="height: 100%; max-width: 200px;" @click="$router.push('/')">
           <img :src="companyLogo" alt="Logo" style="max-height: 48px; max-width: 100%; object-fit: contain;" />
         </div>
@@ -19,7 +19,7 @@
                     :to="item.to"
                     variant="text"
                     rounded="lg"
-                    :color="$route.path === item.to ? 'primary' : 'grey-darken-1'"
+                    :color="$route.path === item.to ? 'secondary' : 'grey-darken-1'"
                     class="text-capitalize font-weight-medium"
                 >
                     <v-icon start size="small">{{ item.icon }}</v-icon>
@@ -46,7 +46,7 @@
     </v-main>
 
     <!-- Bottom Navigation (Mobile Only) -->
-    <v-bottom-navigation v-if="mobile" app grow color="primary" bg-color="surface" elevation="10" style="z-index: 2000;">
+    <v-bottom-navigation v-if="mobile" app grow color="secondary" bg-color="surface" elevation="10" style="z-index: 2000;">
        <v-btn v-for="(item, i) in menuItems.slice(0, 5)" :key="i" :to="item.to">
           <v-icon>{{ item.icon }}</v-icon>
           <span class="text-caption" style="font-size: 10px !important">{{ item.title.split(' ')[0] }}</span>
@@ -63,6 +63,10 @@ import EventServices from '../../services/EventServices'
 
 export default {
   name: 'BillerDashboard',
+  setup() {
+    const { mobile } = useDisplay()
+    return { mobile }
+  },
   data() {
     return {
       companyName: 'Biller Dashboard',
@@ -77,10 +81,6 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ['user']),
-    mobile() {
-      const { mobile } = useDisplay()
-      return mobile.value
-    }
   },
   async mounted() {
     try {

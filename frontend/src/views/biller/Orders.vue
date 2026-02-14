@@ -1,100 +1,100 @@
 <template>
-  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6">
-    <v-row>
-      <v-col cols="12">
-        <div class="d-flex justify-space-between align-center mb-6">
-          <div>
-            <h1 class="text-h4 font-weight-black text-grey-darken-3">Customer Orders</h1>
-            <p class="text-subtitle-1 text-grey-darken-1 mt-1">Manage and fulfill online orders</p>
-          </div>
-          <v-btn
-            color="primary"
-            variant="flat"
-            size="large"
-            prepend-icon="mdi-refresh"
-            rounded="xl"
-            elevation="2"
-            @click="fetchOrders"
-            :loading="loading"
-          >
-            Refresh List
-          </v-btn>
-        </div>
+  <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
+    <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
+      <div class="mb-4 mb-md-0">
+        <h1 class="text-h4 font-weight-black gradient-text">Customer Orders</h1>
+        <p class="text-subtitle-1 text-grey-darken-1 mt-1">Manage and fulfill online orders</p>
+      </div>
+      <v-btn
+        class="bg-gradient-gold text-white align-self-start align-self-sm-auto"
+        size="large"
+        prepend-icon="mdi-refresh"
+        rounded="xl"
+        elevation="2"
+        @click="fetchOrders"
+        :loading="loading"
+      >
+        Refresh List
+      </v-btn>
+    </div>
 
-        <!-- Summary Cards -->
-        <v-row class="mb-6">
-          <v-col cols="12" sm="6" md="3">
-            <v-card class="rounded-xl" elevation="0" border>
-              <v-card-text class="d-flex align-center pa-4">
-                <v-avatar color="orange-lighten-5" size="48" class="mr-4">
-                  <v-icon color="orange-darken-2" size="24">mdi-clock-outline</v-icon>
-                </v-avatar>
-                <div>
-                  <div class="text-caption text-grey font-weight-bold text-uppercase">Pending</div>
-                  <div class="text-h5 font-weight-black text-grey-darken-3">{{ pendingCount }}</div>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-           <v-col cols="12" sm="6" md="3">
-            <v-card class="rounded-xl" elevation="0" border>
-              <v-card-text class="d-flex align-center pa-4">
-                <v-avatar color="green-lighten-5" size="48" class="mr-4">
-                  <v-icon color="green-darken-2" size="24">mdi-check-circle-outline</v-icon>
-                </v-avatar>
-                <div>
-                  <div class="text-caption text-grey font-weight-bold text-uppercase">Completed</div>
-                  <div class="text-h5 font-weight-black text-grey-darken-3">{{ completedCount }}</div>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-           <v-col cols="12" sm="6" md="3">
-            <v-card class="rounded-xl" elevation="0" border>
-              <v-card-text class="d-flex align-center pa-4">
-                <v-avatar color="blue-lighten-5" size="48" class="mr-4">
-                  <v-icon color="blue-darken-2" size="24">mdi-receipt-text-outline</v-icon>
-                </v-avatar>
-                <div>
-                  <div class="text-caption text-grey font-weight-bold text-uppercase">Total Today</div>
-                  <div class="text-h5 font-weight-black text-grey-darken-3">{{ orders.length }}</div>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
+    <!-- Summary Cards -->
+    <v-row class="mb-6 w-100">
+      <v-col cols="12" sm="4">
+        <v-card class="rounded-xl" elevation="0" border>
+          <v-card-text class="d-flex align-center pa-4">
+            <v-avatar color="orange-lighten-5" size="48" class="mr-4">
+              <v-icon color="orange-darken-2" size="24">mdi-clock-outline</v-icon>
+            </v-avatar>
+            <div>
+              <div class="text-caption text-grey font-weight-bold text-uppercase">Pending</div>
+              <div class="text-h5 font-weight-black text-grey-darken-3">{{ pendingCount }}</div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+       <v-col cols="12" sm="4">
+        <v-card class="rounded-xl" elevation="0" border>
+          <v-card-text class="d-flex align-center pa-4">
+            <v-avatar color="green-lighten-5" size="48" class="mr-4">
+              <v-icon color="green-darken-2" size="24">mdi-check-circle-outline</v-icon>
+            </v-avatar>
+            <div>
+              <div class="text-caption text-grey font-weight-bold text-uppercase">Completed</div>
+              <div class="text-h5 font-weight-black text-grey-darken-3">{{ completedCount }}</div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+       <v-col cols="12" sm="4">
+        <v-card class="rounded-xl" elevation="0" border>
+          <v-card-text class="d-flex align-center pa-4">
+            <v-avatar color="blue-lighten-5" size="48" class="mr-4">
+              <v-icon color="blue-darken-2" size="24">mdi-receipt-text-outline</v-icon>
+            </v-avatar>
+            <div>
+              <div class="text-caption text-grey font-weight-bold text-uppercase">Total Today</div>
+              <div class="text-h5 font-weight-black text-grey-darken-3">{{ orders.length }}</div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
-        <v-card class="rounded-xl overflow-hidden border" elevation="0">
-          <v-data-table
-            :headers="headers"
-            :items="orders"
-            :loading="loading"
-            :search="search"
-            class="pa-2"
-            hover
-          >
+    <v-card class="rounded-xl overflow-hidden border w-100" elevation="0" style="overflow-x: auto;">
+      <v-data-table
+        :headers="headers"
+        :items="orders"
+        :loading="loading"
+        :search="search"
+        class="pa-2"
+        hover
+        mobile-breakpoint="0"
+      >
             <!-- Toolbar -->
             <template v-slot:top>
-              <div class="d-flex align-center pa-4 pb-2">
+              <div class="px-4 py-3 border-b">
                 <v-text-field
                   v-model="search"
                   prepend-inner-icon="mdi-magnify"
                   placeholder="Search orders, customers, mobile..."
-                  variant="outlined"
-                  density="comfortable"
+                  variant="plain"
                   hide-details
-                  style="max-width: 300px"
-                  bg-color="grey-lighten-5"
-                  class="rounded-lg"
+                  density="compact"
+                  class="text-body-1 w-100"
                 ></v-text-field>
-                <v-spacer></v-spacer>
-                <v-tabs v-model="statusFilter" density="compact" color="primary">
-                    <v-tab value="ALL">All</v-tab>
-                    <v-tab value="PENDING">Pending</v-tab>
-                    <v-tab value="COMPLETED">Completed</v-tab>
-                </v-tabs>
               </div>
-              <v-divider></v-divider>
+              <div class="d-flex align-center pa-2 bg-grey-lighten-5">
+                <v-tabs v-model="statusFilter" density="compact" color="secondary" bg-color="transparent">
+                    <v-tab value="ALL" class="text-caption font-weight-bold">All</v-tab>
+                    <v-tab value="PENDING" class="text-caption font-weight-bold">Pending</v-tab>
+                    <v-tab value="COMPLETED" class="text-caption font-weight-bold">Completed</v-tab>
+                </v-tabs>
+                <v-spacer></v-spacer>
+                <v-chip size="x-small" color="secondary" variant="tonal" class="font-weight-bold mr-2">
+                    {{ orders.length }} Items
+                </v-chip>
+              </div>
             </template>
 
             <!-- Custom Headers -->
@@ -103,7 +103,7 @@
                     <template v-for="column in columns" :key="column.key">
                         <th class="text-overline text-grey-darken-1 font-weight-bold py-3 px-4" :class="{'text-end': column.align==='end'}" @click="() => toggleSort(column)" style="cursor: pointer">
                             {{ column.title }}
-                            <v-icon v-if="isSorted(column)" color="primary" size="small">{{ getSortIcon(column) }}</v-icon>
+                            <v-icon v-if="isSorted(column)" color="secondary" size="small">{{ getSortIcon(column) }}</v-icon>
                         </th>
                     </template>
                 </tr>
@@ -116,7 +116,7 @@
 
             <template v-slot:item.customer="{ item }">
                 <div class="d-flex align-center">
-                    <v-avatar color="primary" variant="tonal" size="32" class="mr-3">
+                    <v-avatar color="secondary" variant="tonal" size="32" class="mr-3">
                         <span class="text-subtitle-2 font-weight-bold">{{ item.customer ? item.customer.name.charAt(0) : '?' }}</span>
                     </v-avatar>
                     <div>
@@ -154,10 +154,9 @@
                     <v-btn 
                         v-if="item.status === 'PENDING'"
                         size="small" 
-                        color="primary" 
+                        class="bg-gradient-gold text-white px-4" 
                         variant="flat" 
                         rounded="pill"
-                        class="px-4"
                         @click="loadToPOS(item)"
                     >
                         <v-icon start size="small">mdi-cash-register</v-icon>
@@ -183,10 +182,8 @@
                     <div class="text-body-2 text-grey-lighten-1">New online orders will appear here</div>
                 </div>
             </template>
-          </v-data-table>
-        </v-card>
-      </v-col>
-    </v-row>
+      </v-data-table>
+    </v-card>
   </v-container>
 </template>
 
@@ -253,3 +250,14 @@ export default {
     }
 }
 </script>
+<style scoped>
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
+.gradient-text {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+</style>

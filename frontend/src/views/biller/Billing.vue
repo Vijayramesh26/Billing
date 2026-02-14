@@ -56,11 +56,11 @@
     <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row align-start align-md-center justify-space-between mb-8 w-100">
        <div class="d-flex align-center mb-4 mb-md-0">
-         <v-avatar color="primary" class="mr-4 elevation-2">
+         <v-avatar color="secondary" class="mr-4 elevation-2">
              <v-icon color="white">mdi-storefront-outline</v-icon>
          </v-avatar>
          <div>
-            <h1 class="text-h5 text-md-h4 font-weight-black text-grey-darken-3" style="letter-spacing: -1px;">POS Terminal</h1>
+            <h1 class="text-h5 text-md-h4 font-weight-black text-grey-darken-3 gradient-text" style="letter-spacing: -1px;">POS Terminal</h1>
             <div class="text-subtitle-2 text-grey-darken-1">Manage sales and billing efficiently</div>
          </div>
        </div>
@@ -70,7 +70,7 @@
               <span class="text-body-2 font-weight-bold text-grey-darken-3">{{ new Date().toLocaleDateString() }}</span>
            </v-card>
            
-           <v-chip color="primary" variant="flat" class="font-weight-bold px-6 py-4 flex-grow-1 flex-md-grow-0 justify-center" size="large" rounded="pill">
+           <v-chip color="secondary" class="bg-amber-lighten-5 font-weight-bold px-6 py-4 flex-grow-1 flex-md-grow-0 justify-center" size="large" rounded="pill">
               <v-icon start size="small" class="mr-2">mdi-receipt-text-outline</v-icon>
               {{ nextBillNo }}
            </v-chip>
@@ -177,14 +177,14 @@
                 <div class="d-flex align-center mb-6">
                     <div class="text-h6 font-weight-bold text-grey-darken-3">Details</div>
                     <v-spacer></v-spacer>
-                    <v-btn 
-                        variant="tonal" 
-                        color="primary" 
-                        size="small" 
-                        rounded="pill" 
-                        prepend-icon="mdi-account-plus"
-                        @click="showAddCustomer=true"
-                    >New Customer</v-btn>
+                        <v-btn 
+                            variant="tonal" 
+                            color="secondary" 
+                            size="small" 
+                            rounded="pill" 
+                            prepend-icon="mdi-account-plus"
+                            @click="showAddCustomer=true"
+                        >New Customer</v-btn>
                 </div>
 
                <!-- Customer Selection -->
@@ -208,7 +208,7 @@
                    </template>
                    <template v-slot:item="{ props, item }">
                        <v-list-item v-bind="props" :title="item.raw.name" :subtitle="item.raw.mobile">
-                           <template v-slot:prepend><v-icon color="primary">mdi-account</v-icon></template>
+                           <template v-slot:prepend><v-icon color="secondary">mdi-account</v-icon></template>
                        </v-list-item>
                    </template>
                    <template v-slot:no-data>
@@ -258,11 +258,11 @@
                   <div v-if="selectedProduct" class="bg-blue-lighten-5 pa-4 rounded-xl mb-6">
                       <div class="d-flex justify-space-between align-center mb-3">
                         <span class="text-subtitle-2 text-grey-darken-2">Item Price</span>
-                        <span class="text-h6 font-weight-bold text-primary">₹{{ selectedProduct.unit_price }}</span>
+                         <span class="text-h6 font-weight-bold text-secondary">₹{{ selectedProduct.unit_price }}</span>
                       </div>
                       
                       <div class="d-flex align-center">
-                         <v-btn icon="mdi-minus" size="small" variant="text" color="primary" @click="qty > 1 ? qty-- : null" class="bg-white rounded-lg"></v-btn>
+                          <v-btn icon="mdi-minus" size="small" variant="text" color="secondary" @click="qty > 1 ? qty-- : null" class="bg-white rounded-lg"></v-btn>
                          <v-text-field
                             v-model.number="qty"
                             type="number"
@@ -272,7 +272,7 @@
                             class="text-center mx-2 font-weight-bold text-h6"
                             style="max-width: 60px"
                          ></v-text-field>
-                         <v-btn icon="mdi-plus" size="small" variant="text" color="primary" @click="qty++" class="bg-white rounded-lg"></v-btn>
+                          <v-btn icon="mdi-plus" size="small" variant="text" color="secondary" @click="qty++" class="bg-white rounded-lg"></v-btn>
                       </div>
                       
                       <div class="d-flex justify-space-between align-center mt-4 pt-3 border-t border-dashed border-opacity-50">
@@ -284,7 +284,7 @@
 
               <v-btn 
                 block 
-                class="gradient-btn text-capitalize"
+                class="bg-gradient-gold text-white text-capitalize"
                 size="x-large"
                 rounded="xl"
                 @click="addToCart" 
@@ -305,7 +305,7 @@
             <div class="d-flex align-center">
                <v-icon color="grey-darken-1" class="mr-2">mdi-shopping-outline</v-icon>
                <span class="text-h6 font-weight-bold text-grey-darken-3">Current Cart</span>
-               <v-chip class="ml-3 font-weight-bold bg-primary-lighten-5 text-primary" size="small" rounded="pill">{{ cart.length }} items</v-chip>
+                <v-chip class="ml-3 font-weight-bold bg-amber-lighten-5 text-secondary" size="small" rounded="pill">{{ cart.length }} items</v-chip>
             </div>
             <v-btn width="40" height="40" icon variant="tonal" color="error" class="rounded-lg" @click="cart = []" :disabled="cart.length === 0" title="Clear Cart">
                <v-icon>mdi-delete-sweep-outline</v-icon>
@@ -343,7 +343,7 @@
                           <div class="d-inline-flex align-center bg-grey-lighten-4 rounded-pill px-1">
                               <v-btn icon="mdi-minus" size="x-small" variant="text" density="comfortable" color="grey-darken-2" @click="decreaseQty(item)"></v-btn>
                               <span class="mx-2 font-weight-bold text-body-2" style="min-width: 20px">{{ item.quantity }}</span>
-                              <v-btn icon="mdi-plus" size="x-small" variant="text" density="comfortable" color="primary" @click="increaseQty(item)"></v-btn>
+                               <v-btn icon="mdi-plus" size="x-small" variant="text" density="comfortable" color="secondary" @click="increaseQty(item)"></v-btn>
                           </div>
                        </td>
                        <td class="text-right text-body-2">₹{{ item.unit_price }}</td>
@@ -365,7 +365,7 @@
                   <v-item-group v-model="paymentMode" mandatory class="d-flex gap-2">
                        <v-item v-for="mode in ['CASH', 'ONLINE', 'UPI']" :key="mode" :value="mode" v-slot="{ isSelected, toggle }">
                            <v-card
-                               :color="isSelected ? 'primary' : 'white'"
+                               :color="isSelected ? 'secondary' : 'white'"
                                :variant="isSelected ? 'flat' : 'outlined'"
                                class="d-flex align-center justify-center px-4 py-2 rounded-lg cursor-pointer mr-2 transition-swing"
                                @click="toggle"
@@ -409,7 +409,7 @@
             
             <v-btn 
                block 
-               class="gradient-btn-success mt-6 text-capitalize"
+               class="bg-gradient-gold text-white mt-6 text-capitalize"
                size="x-large"
                rounded="xl"
                elevation="4"
@@ -430,14 +430,14 @@
     <!-- Refined Invoice Preview -->
     <v-dialog v-model="previewDialog" max-width="400" scrollable transition="dialog-bottom-transition">
         <v-card class="rounded-xl overflow-hidden">
-            <div class="bg-primary px-6 py-4 d-flex justify-space-between align-center">
+            <div class="bg-gradient-gold px-6 py-4 d-flex justify-space-between align-center">
                 <span class="text-h6 font-weight-bold text-white">Invoice Preview</span>
-                <v-btn icon="mdi-close" variant="text" cololr="white" density="compact" @click="previewDialog = false" class="text-white"></v-btn>
+                <v-btn icon="mdi-close" variant="text" color="white" density="compact" @click="previewDialog = false" class="text-white"></v-btn>
             </div>
             <v-card-text class="pa-0 bg-white" id="invoice-section">
                 <div class="pa-8">
                     <div class="text-center mb-6">
-                        <div class="d-inline-flex align-center justify-center bg-primary rounded-circle mb-3" style="width:48px; height:48px">
+                        <div class="d-inline-flex align-center justify-center bg-gradient-gold rounded-circle mb-3" style="width:48px; height:48px">
                             <v-icon color="white">mdi-store</v-icon>
                         </div>
                         <h2 class="text-h6 font-weight-black text-uppercase letter-spacing-1">{{ companyName }}</h2>
@@ -500,7 +500,7 @@
                >
                    Share
                </v-btn>
-                <v-btn class="gradient-btn-success" size="large" rounded="lg" prepend-icon="mdi-printer" @click="isViewOnly ? printBill() : confirmAndPrint()" :loading="saving" elevation="3">
+                <v-btn class="bg-gradient-gold text-white" size="large" rounded="lg" prepend-icon="mdi-printer" @click="isViewOnly ? printBill() : confirmAndPrint()" :loading="saving" elevation="3">
                     {{ isViewOnly ? 'Print' : 'Confirm & Print' }}
                 </v-btn>
             </v-card-actions>
@@ -521,7 +521,7 @@
         <v-card-actions class="pa-4 pr-6 border-t bg-grey-lighten-5">
           <v-spacer></v-spacer>
           <v-btn variant="text" color="grey-darken-1" @click="showAddCustomer=false" class="mr-2">Cancel</v-btn>
-          <v-btn color="primary" variant="flat" rounded="lg" @click="createCustomer" class="px-6">Save Customer</v-btn>
+          <v-btn color="secondary" variant="flat" rounded="lg" @click="createCustomer" class="px-6">Save Customer</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -540,6 +540,10 @@ import { useDisplay } from 'vuetify'
 
 export default {
   name: 'BillerPOS',
+  setup() {
+    const { mobile } = useDisplay()
+    return { mobile }
+  },
   data() {
     return {
       products: [],
@@ -585,10 +589,6 @@ export default {
     }
   },
   computed: {
-    mobile() {
-      const { mobile } = useDisplay()
-      return mobile.value
-    },
     subTotal() {
         return this.cart.reduce((sum, item) => sum + item.total, 0)
     },
@@ -929,9 +929,19 @@ export default {
 </script>
 
 <style scoped>
+.bg-gradient-gold {
+     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
+.gradient-text {
+     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%);
+     -webkit-background-clip: text;
+     background-clip: text;
+     -webkit-text-fill-color: transparent;
+}
 .border-dashed {
     border-style: dashed !important;
 }
+
 @media print {
     body * {
         visibility: hidden;

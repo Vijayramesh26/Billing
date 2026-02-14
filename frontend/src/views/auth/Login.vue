@@ -3,12 +3,10 @@
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4" lg="3">
         <v-card class="elevation-10 rounded-xl pa-5">
-            <div class="text-center mt-4 mb-2">
-                 <v-avatar color="primary" size="64">
-                    <v-icon icon="mdi-account" size="large" color="white"></v-icon>
-                 </v-avatar>
+            <div class="text-center mt-4 mb-6">
+                 <img src="/logo.svg" alt="Seyyal Logo" style="height: 60px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
             </div>
-          <v-card-title class="text-h5 font-weight-bold text-center primary--text">
+          <v-card-title class="text-h4 font-weight-black text-center text-secondary mb-1">
             Welcome Back
           </v-card-title>
           <v-card-subtitle class="text-center mb-6">
@@ -23,7 +21,7 @@
                 name="login"
                 prepend-inner-icon="mdi-account-outline"
                 variant="outlined"
-                color="primary"
+                color="secondary"
                 :rules="[v => !!v || 'ID is required']"
                 class="mb-2"
               ></v-text-field>
@@ -37,7 +35,7 @@
                 :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
                 @click:append-inner="showPassword = !showPassword"
                 variant="outlined"
-                color="primary"
+                color="secondary"
                 :rules="[v => !!v || 'Password is required']"
               ></v-text-field>
               
@@ -45,14 +43,13 @@
                 {{ error }}
               </v-alert>
 
-              <v-btn
+               <v-btn
                 block
-                color="primary"
+                class="bg-gradient-gold text-white mt-4 text-none font-weight-black rounded-lg"
                 size="large"
                 type="submit"
                 :loading="loading"
-                class="mt-2 text-none font-weight-bold rounded-lg"
-                elevation="2"
+                elevation="4"
               >
                 Sign In
               </v-btn>
@@ -128,4 +125,7 @@ export default {
 .bg-grey-lighten-4 {
   background-color: #f5f5f5 !important;
 }
+ .bg-gradient-gold {
+     background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+ }
 </style>

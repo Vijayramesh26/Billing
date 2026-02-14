@@ -1,25 +1,26 @@
 <template>
   <v-container fluid class="fill-height bg-grey-lighten-5 pa-6 d-flex flex-column align-start">
-    <div class="d-flex justify-space-between w-100 align-center mb-6">
-        <div>
-            <h1 class="text-h4 font-weight-black text-grey-darken-3">Sales Reports</h1>
+    <div class="d-flex flex-column flex-md-row justify-space-between w-100 align-start align-md-center mb-6">
+        <div class="mb-4 mb-md-0">
+            <h1 class="text-h4 font-weight-black text-secondary">Sales Reports</h1>
             <div class="text-subtitle-1 text-grey-darken-1">Analyze revenue and transaction history</div>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-column flex-md-row gap-4 w-100 bg-white pa-4 rounded-xl border-thin mb-8 align-center">
+            <v-icon color="secondary" class="d-none d-md-flex">mdi-calendar-range</v-icon>
             <input 
                 type="date" 
                 v-model="startDate" 
-                class="bg-white px-4 py-2 rounded-lg elevation-1 text-body-2 font-weight-bold text-grey-darken-3"
-                style="outline: none; border: 1px solid rgba(0,0,0,0.1);"
+                class="pa-2 rounded-lg flex-grow-1"
+                style="outline: none; border: 1px solid rgba(0,0,0,0.1); font-family: inherit;"
             />
-            <span class="d-flex align-center text-grey">-</span>
+            <span class="text-grey d-none d-md-flex">to</span>
             <input 
                 type="date" 
                 v-model="endDate" 
-                class="bg-white px-4 py-2 rounded-lg elevation-1 text-body-2 font-weight-bold text-grey-darken-3"
-                style="outline: none; border: 1px solid rgba(0,0,0,0.1);"
+                class="pa-2 rounded-lg flex-grow-1"
+                style="outline: none; border: 1px solid rgba(0,0,0,0.1); font-family: inherit;"
             />
-            <v-btn color="primary" rounded="lg" elevation-2 @click="fetchReports" :loading="loading">
+            <v-btn class="bg-gradient-gold text-white w-100 w-md-auto" rounded="lg" elevation-2 @click="fetchReports" :loading="loading" height="44">
                 Apply Filter
             </v-btn>
         </div>
@@ -30,12 +31,12 @@
         <v-col cols="12" md="4">
             <v-card class="rounded-xl border-thin elevation-0 bg-white pa-4">
                 <div class="d-flex align-start">
-                    <v-avatar color="primary-lighten-5" class="text-primary rounded-lg mr-4">
+                    <v-avatar color="amber-lighten-5" class="text-secondary rounded-lg mr-4">
                         <v-icon>mdi-cash-multiple</v-icon>
                     </v-avatar>
                     <div>
                         <div class="text-caption text-grey font-weight-bold text-uppercase">Total Revenue</div>
-                        <div class="text-h4 font-weight-black text-grey-darken-3 mt-1">₹{{ summary.total_revenue.toFixed(2) }}</div>
+                        <div class="text-h4 font-weight-black text-secondary mt-1">₹{{ summary.total_revenue.toFixed(2) }}</div>
                     </div>
                 </div>
             </v-card>
@@ -186,4 +187,7 @@ export default {
 .border-thin { border: 1px solid rgba(0,0,0,0.08); }
 .rotate-180 { transform: rotate(180deg); }
 .gap-2 { gap: 8px; }
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #C5A065 0%, #B08D55 100%) !important;
+}
 </style>
