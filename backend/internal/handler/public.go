@@ -16,6 +16,30 @@ import (
 
 type PublicHandler struct{}
 
+func (h *PublicHandler) GetSiteInfo(c *gin.Context) {
+	// In the future, this can be fetched from the database
+	info := models.SiteInfo{
+		Name:         "Seyyal",
+		Tagline:      "Elevate Your Daily Lifestyle",
+		Description:  "Comprehensive billing and inventory management solution designed for retail businesses.",
+		Logo:         "/logo.svg",
+		Address:      "123 Business Street, Chennai, Tamil Nadu",
+		Phone:        "+91 98765 43210",
+		Email:        "contact@seyyal.com",
+		Whatsapp:     "+919876543210",
+		OpeningHours: "Mon - Sat: 9:00 AM - 9:00 PM",
+		WorkingDays:  []string{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"},
+		MapLink:      "https://goo.gl/maps/example",
+		Socials: models.Socials{
+			Facebook:  "https://facebook.com",
+			Instagram: "https://instagram.com",
+			Twitter:   "https://twitter.com",
+			Linkedin:  "https://linkedin.com",
+		},
+	}
+	c.JSON(http.StatusOK, info)
+}
+
 func (h *PublicHandler) GetPublicConfig(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"company_name":    config.AppConfig.Defaults.CompanyName,
@@ -27,8 +51,8 @@ func (h *PublicHandler) GetPublicConfig(c *gin.Context) {
 
 func (h *PublicHandler) ListPublicProducts(c *gin.Context) {
 	var products []models.Product
-	// Only show active and in-stock products
-	if err := database.DB.Preload("Brand").Where("is_active = ? AND current_stock > 0", true).Find(&products).Error; err != nil {
+	// Show all active products (including out of stock)
+	if err := database.DB.Preload("Brand").Preload("Category").Where("is_active = ?", true).Find(&products).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch products"})
 		return
 	}

@@ -223,35 +223,36 @@
 
             <div class="pa-6 pt-4 flex-grow-1">
               <div class="text-subtitle-2 font-weight-bold text-grey-darken-2 mb-3">Add Products</div>
-              <v-autocomplete
-                v-model="selectedProduct"
-                :items="products"
-                item-title="name"
-                item-value="id"
-                placeholder="Scan barcode or search product..."
-                variant="outlined"
-                density="comfortable"
-                prepend-inner-icon="mdi-barcode-scan"
-                return-object
-                auto-select-first
-                class="mb-6"
-                rounded="lg"
-                bg-color="grey-lighten-5"
-                menu-icon="mdi-chevron-down"
-              >
-                <template v-slot:item="{ props, item }">
-                  <v-list-item v-bind="props" :title="item.raw.name" class="py-3 border-b">
-                    <template v-slot:append>
-                        <div class="d-flex flex-column align-end">
-                            <span class="font-weight-bold text-body-2">₹{{ item.raw.unit_price }}</span>
-                            <v-chip size="x-small" :color="item.raw.current_stock < 10 ? 'red-lighten-4' : 'green-lighten-4'" class="mt-1 font-weight-bold" :class="item.raw.current_stock < 10 ? 'text-red' : 'text-green-darken-2'">
-                                {{ item.raw.current_stock }} in stock
-                            </v-chip>
-                        </div>
-                    </template>
-                  </v-list-item>
-                </template>
-              </v-autocomplete>
+               <!-- Product Selection -->
+               <v-autocomplete
+                 v-model="selectedProduct"
+                 :items="products"
+                 :item-title="item => item.brand ? `${item.name} (${item.brand.name})` : item.name"
+                 item-value="id"
+                 placeholder="Scan barcode or search product..."
+                 variant="outlined"
+                 density="comfortable"
+                 prepend-inner-icon="mdi-barcode-scan"
+                 return-object
+                 auto-select-first
+                 class="mb-6"
+                 rounded="lg"
+                 bg-color="grey-lighten-5"
+                 menu-icon="mdi-chevron-down"
+               >
+                 <template v-slot:item="{ props, item }">
+                   <v-list-item v-bind="props" :title="item.raw.name" :subtitle="item.raw.brand ? item.raw.brand.name : ''" class="py-3 border-b">
+                     <template v-slot:append>
+                         <div class="d-flex flex-column align-end">
+                             <span class="font-weight-bold text-body-2">₹{{ item.raw.unit_price }}</span>
+                             <v-chip size="x-small" :color="item.raw.current_stock < 10 ? 'red-lighten-4' : 'green-lighten-4'" class="mt-1 font-weight-bold" :class="item.raw.current_stock < 10 ? 'text-red' : 'text-green-darken-2'">
+                                 {{ item.raw.current_stock }} in stock
+                             </v-chip>
+                         </div>
+                     </template>
+                   </v-list-item>
+                 </template>
+               </v-autocomplete>
               
               <v-expand-transition>
                   <div v-if="selectedProduct" class="bg-blue-lighten-5 pa-4 rounded-xl mb-6">

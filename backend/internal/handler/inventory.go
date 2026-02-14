@@ -14,7 +14,7 @@ type InventoryHandler struct{}
 
 func (h *InventoryHandler) ListProducts(c *gin.Context) {
 	var products []models.Product
-	if err := database.DB.Preload("Brand").Where("is_active = ?", true).Find(&products).Error; err != nil {
+	if err := database.DB.Preload("Brand").Preload("Category").Where("is_active = ?", true).Find(&products).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch products"})
 		return
 	}
@@ -24,10 +24,12 @@ func (h *InventoryHandler) ListProducts(c *gin.Context) {
 type CreateProductRequest struct {
 	Name              string  `json:"name" binding:"required"`
 	BrandName         string  `json:"brand_name" binding:"required"`
+	CategoryID        *uint   `json:"category_id"`
 	Description       string  `json:"description"`
 	UnitPrice         float64 `json:"unit_price" binding:"required"`
 	LowStockThreshold int     `json:"low_stock_threshold"`
 	Barcode           string  `json:"barcode"`
+	OpeningStock      int     `json:"opening_stock"`
 }
 
 func (h *InventoryHandler) CreateProduct(c *gin.Context) {
@@ -44,20 +46,43 @@ func (h *InventoryHandler) CreateProduct(c *gin.Context) {
 		return
 	}
 
+	userID := c.GetUint("userID")
+
+	tx := database.DB.Begin()
+
 	product := models.Product{
 		Name:              req.Name,
 		BrandID:           brand.ID,
+		CategoryID:        req.CategoryID,
 		Description:       req.Description,
 		UnitPrice:         req.UnitPrice,
 		LowStockThreshold: req.LowStockThreshold,
+		CurrentStock:      req.OpeningStock, // Set initial stock
 		Barcode:           req.Barcode,
 		IsActive:          true,
 	}
 
-	if err := database.DB.Create(&product).Error; err != nil {
+	if err := tx.Create(&product).Error; err != nil {
+		tx.Rollback()
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create product"})
 		return
 	}
+
+	// Create Stock Entry if Opening Stock is provided
+	if req.OpeningStock > 0 {
+		entry := models.StockEntry{
+			ProductID:     product.ID,
+			QuantityAdded: req.OpeningStock,
+			AddedBy:       userID,
+		}
+		if err := tx.Create(&entry).Error; err != nil {
+			tx.Rollback()
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to log opening stock"})
+			return
+		}
+	}
+
+	tx.Commit()
 
 	c.JSON(http.StatusCreated, product)
 }
@@ -114,9 +139,44 @@ func (h *InventoryHandler) ListBrands(c *gin.Context) {
 
 func (h *InventoryHandler) GetLowStockAlerts(c *gin.Context) {
 	var products []models.Product
-	if err := database.DB.Preload("Brand").Where("current_stock <= low_stock_threshold AND is_active = ?", true).Find(&products).Error; err != nil {
+	if err := database.DB.Preload("Brand").Preload("Category").Where("current_stock <= low_stock_threshold AND is_active = ?", true).Find(&products).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch alerts"})
 		return
 	}
 	c.JSON(http.StatusOK, products)
+}
+
+// Category Handlers
+type CreateCategoryRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
+}
+
+func (h *InventoryHandler) CreateCategory(c *gin.Context) {
+	var req CreateCategoryRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	category := models.Category{
+		Name:        req.Name,
+		Description: req.Description,
+	}
+
+	if err := database.DB.Create(&category).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create category"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, category)
+}
+
+func (h *InventoryHandler) ListCategories(c *gin.Context) {
+	var categories []models.Category
+	if err := database.DB.Find(&categories).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch categories"})
+		return
+	}
+	c.JSON(http.StatusOK, categories)
 }

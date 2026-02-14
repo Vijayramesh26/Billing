@@ -33,22 +33,28 @@ export default {
         return apiClient.get('/public/config')
     },
 
-    // Inventory
+    // Products
     getProducts() {
         return apiClient.get('/inventory/products')
     },
-
     addProduct(product) {
         return apiClient.post('/inventory/products', product)
     },
-    
-    // Updated to match backend route /stock
-    addStock(stockData) {
-        return apiClient.post('/inventory/stock', stockData)
+    addStock(stock) {
+        return apiClient.post('/inventory/stock', stock)
     },
-
-    getAlerts() {
+    getBrands() {
+        return apiClient.get('/inventory/brands')
+    },
+    getLowStockAlerts() {
         return apiClient.get('/inventory/alerts')
+    },
+    // Categories
+    getCategories() {
+        return apiClient.get('/inventory/categories')
+    },
+    createCategory(category) {
+        return apiClient.post('/inventory/categories', category)
     },
 
     // Manager

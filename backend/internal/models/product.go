@@ -13,11 +13,21 @@ type Brand struct {
 	Products  []Product `json:"-"`
 }
 
+type Category struct {
+	ID          uint      `gorm:"primaryKey" json:"id"`
+	Name        string    `gorm:"size:100;unique;not null" json:"name"`
+	Description string    `gorm:"type:text" json:"description"`
+	CreatedAt   time.Time `json:"created_at"`
+	Products    []Product `json:"-"`
+}
+
 type Product struct {
 	ID                uint           `gorm:"primaryKey" json:"id"`
 	Name              string         `gorm:"size:150;not null" json:"name"`
 	BrandID           uint           `json:"brand_id"`
 	Brand             Brand          `gorm:"foreignKey:BrandID" json:"brand"`
+	CategoryID        *uint          `json:"category_id"`
+	Category          *Category      `gorm:"foreignKey:CategoryID" json:"category"`
 	Description       string         `gorm:"type:text" json:"description"`
 	UnitPrice         float64        `gorm:"type:decimal(10,2);not null" json:"unit_price"`
 	CurrentStock      int            `gorm:"default:0" json:"current_stock"`

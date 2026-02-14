@@ -69,6 +69,7 @@ export default {
       companyLogo: '',
       menuItems: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/inventory' },
+        { title: 'Categories', icon: 'mdi-shape', to: '/inventory/categories' }, // Added
         { title: 'Products', icon: 'mdi-package-variant', to: '/inventory/products' },
         { title: 'Add Stock', icon: 'mdi-plus-box', to: '/inventory/stock' },
         { title: 'Alerts', icon: 'mdi-alert', to: '/inventory/alerts' },

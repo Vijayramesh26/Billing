@@ -1,10 +1,9 @@
 <template>
-  <div class="bg-grey-lighten-5 font-sans h-100">
-    <!-- Modern App Bar -->
+  <div class="products-view bg-surface h-100 font-sans">
+    <!-- App Bar -->
     <v-app-bar color="white" elevation="0" height="80" class="border-b-0 sticky-nav">
       <v-container class="d-flex align-center py-0">
-        <div class="d-flex align-center cursor-pointer">
-            <!-- Increased width to fit full text logo -->
+        <div class="d-flex align-center cursor-pointer" @click="$router.push('/')">
             <img src="/logo.svg" alt="Seyyal Logo" height="48" class="mr-3 elevation-1 rounded-lg" />
         </div>
         <v-spacer></v-spacer>
@@ -30,7 +29,7 @@
     </v-app-bar>
 
     <v-main>
-      <!-- Modern Hero Section -->
+      <!-- Original Hero Section Restored -->
       <div class="hero-section relative overflow-hidden mb-12">
         <div class="hero-bg-pattern"></div>
         <div class="hero-overlay"></div>
@@ -47,7 +46,7 @@
                         NEW COLLECTION ARRIVED
                     </v-chip>
                     
-                    <h1 class="text-h3 text-md-h2 text-lg-h1 font-weight-black mb-6 text-white lh-tight drop-shadow-sm">
+                    <h1 class="text-h3 text-md-h2 text-lg-h1 font-weight-black mb-6 text-white lh-tight drop-shadow-sm font-heading">
                         Elevate Your <br>
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-white">Daily Lifestyle.</span>
                     </h1>
@@ -81,7 +80,6 @@
                     </div>
                 </v-col>
                 <v-col cols="12" md="4" lg="5" class="d-none d-md-flex justify-end relative">
-                    <!-- Decorative decorative image placeholder or illustration -->
                      <div class="floating-card rounded-xl bg-white/10 backdrop-blur-md pa-6 border-white/20 border-thin elevation-10" style="width: 380px;">
                         <div class="d-flex align-center mb-6">
                             <v-avatar color="white" size="56" class="mr-4 elevation-2">
@@ -97,9 +95,6 @@
                              <div class="h-2 w-12 bg-white/20 rounded-pill"></div>
                         </div>
                         <div class="h-32 w-full bg-gradient-to-br from-white/10 to-transparent rounded-lg mb-4 border-white/10 border-thin"></div>
-                        <div class="d-flex gap-2">
-                            <div class="h-10 w-full bg-teal-400 rounded-lg"></div>
-                        </div>
                      </div>
                 </v-col>
             </v-row>
@@ -110,112 +105,64 @@
         <div class="d-flex justify-space-between align-end mb-10">
             <div>
                  <div class="text-overline text-teal font-weight-bold ls-2 mb-1">OUR CATALOG</div>
-                 <h2 class="text-h3 font-weight-bold text-grey-darken-4">Featured Products</h2>
+                 <h2 class="text-h3 font-weight-bold text-grey-darken-4 font-heading">Featured Products</h2>
             </div>
-            <!-- Search is now in Hero, but we can keep a filter text or count here -->
             <div class="text-grey-darken-1 font-weight-medium">
                 Showing {{ filteredProducts.length }} results
             </div>
         </div>
 
-        <!-- Products Grid -->
-        <v-row>
-          <v-col cols="12" sm="6" md="4" lg="3" v-for="product in filteredProducts" :key="product.id">
-            <v-card 
-                class="rounded-xl product-card h-100 d-flex flex-column bg-white overflow-visible wrapper-hover-effect" 
-                elevation="0"
+        <!-- Category Filter -->
+        <div class="d-flex overflow-x-auto gap-2 mb-8 hide-scrollbar">
+          <v-chip
+            v-for="cat in computedCategories"
+            :key="cat"
+            :color="selectedCategory === cat ? 'teal' : 'grey-lighten-3'"
+            :variant="selectedCategory === cat ? 'flat' : 'flat'"
+            :class="selectedCategory === cat ? 'text-white' : 'text-grey-darken-1'"
+            class="font-weight-bold px-4"
+            size="large"
+            @click="selectedCategory = cat"
+            link
+          >
+            {{ cat }}
+          </v-chip>
+        </div>
+
+        <v-fade-transition mode="out-in">
+          <v-row :key="selectedCategory">
+             <!-- Product Cards - Using the NEW ShopProductCard -->
+            <v-col
+              v-for="product in filteredProducts"
+              :key="product.id"
+              cols="12" sm="6" md="4" lg="3"
             >
-              <div class="pa-4 relative">
-                  <!-- Image Container -->
-                  <div class="image-container rounded-xl overflow-hidden elevation-0 relative bg-grey-lighten-4" style="padding-top: 100%;">
-                      <v-img 
-                        src="https://via.placeholder.com/400x400/f5f5f5/009688?text=Product" 
-                        cover 
-                        class="absolute-full transition-transform duration-500 hover-zoom"
-                      ></v-img>
-                  </div>
-                  
-                  <!-- Badges -->
-                  <div class="absolute top-4 left-4 z-10 d-flex flex-column gap-2">
-                       <v-chip 
-                        v-if="product.current_stock < 10" 
-                        color="error" 
-                        size="small" 
-                        variant="flat" 
-                        class="font-weight-bold elevation-2"
-                      >Low Stock</v-chip>
-                  </div>
-
-                  <!-- Wishlist Button -->
-                  <v-btn 
-                    icon="mdi-heart-outline" 
-                    variant="flat" 
-                    color="white" 
-                    size="small" 
-                    class="absolute top-4 right-4 elevation-2 z-10 text-grey-darken-2 hover-red transition-colors"
-                  ></v-btn>
-              </div>
-              
-              <div class="px-5 pb-6 pt-2 d-flex flex-column flex-grow-1">
-                  <div class="d-flex justify-space-between align-start mb-2">
-                      <div class="text-caption text-grey-darken-1 font-weight-bold text-uppercase tracking-wide">
-                          {{ product.brand ? product.brand.name : 'ESSENTIALS' }}
-                      </div>
-                      <div class="d-flex align-center" v-if="product.rating">
-                          <v-icon color="amber" size="x-small" class="mr-1">mdi-star</v-icon>
-                          <span class="text-caption font-weight-bold text-grey-darken-3">{{ product.rating }}</span>
-                      </div>
-                  </div>
-                  
-                  <div class="text-h6 font-weight-bold text-grey-darken-4 mb-3 lh-sm line-clamp-2 d-block bg-transparent" style="min-height: 48px;">
-                      {{ product.name }}
-                  </div>
-                  
-                  <v-spacer></v-spacer>
-                  
-                  <div class="d-flex align-end justify-space-between mt-4">
-                      <div>
-                          <div class="text-caption text-grey text-decoration-line-through font-weight-medium mb-1" v-if="product.unit_price > 0">
-                            ₹{{ (product.unit_price * 1.2).toFixed(0) }}
-                          </div>
-                          <div class="text-h5 font-weight-black text-teal-darken-3 lh-1">
-                            ₹{{ product.unit_price }}
-                          </div>
-                      </div>
-                      <v-btn 
-                        color="grey-darken-4" 
-                        variant="flat" 
-                        size="large" 
-                        rounded="xl" 
-                        class="px-6 font-weight-bold elevation-0 hover-teal transition-all"
-                        prepend-icon="mdi-cart-plus"
-                        @click="addToCart(product)"
-                      >
-                        Add
-                      </v-btn>
-                  </div>
-              </div>
-            </v-card>
-          </v-col>
-        </v-row>
-
-        <!-- Empty State -->
-        <div v-if="products.length === 0 && !loading" class="text-center py-24">
-            <div class="bg-grey-lighten-5 rounded-circle d-inline-flex pa-8 mb-6">
+              <ShopProductCard 
+                :product="product" 
+                @add-to-cart="addToCart"
+                @view="viewProduct"
+              />
+            </v-col>
+            
+            <!-- Empty State -->
+            <v-col cols="12" v-if="filteredProducts.length === 0 && !loading" class="text-center py-24">
+               <div class="bg-grey-lighten-5 rounded-circle d-inline-flex pa-8 mb-6">
                  <v-icon size="64" color="grey-lighten-1">mdi-package-variant-closed</v-icon>
-            </div>
-            <div class="text-h5 font-weight-bold text-grey-darken-2">No products found</div>
-            <p class="text-grey mt-2">Try adjusting your search terms</p>
-        </div>
-        
-        <!-- Loading State -->
-        <div v-if="loading" class="d-flex justify-center py-24">
-            <v-progress-circular indeterminate color="teal" size="64" width="6"></v-progress-circular>
-        </div>
+               </div>
+              <h3 class="text-h6 text-medium-emphasis">No items found.</h3>
+              <p class="text-grey mt-2">Try adjusting your search.</p>
+            </v-col>
+            
+             <!-- Loading State -->
+            <v-col cols="12" v-if="loading" class="text-center py-24">
+                 <v-progress-circular indeterminate color="teal" size="64"></v-progress-circular>
+            </v-col>
+          </v-row>
+        </v-fade-transition>
       </v-container>
     </v-main>
 
-    <!-- Cart Drawer -->
+    <!-- Cart Drawer (Kept intact with Teal/Green theme from original shop) -->
     <v-navigation-drawer 
         v-model="cartDrawer" 
         location="right" 
@@ -223,7 +170,6 @@
         temporary
         class="elevation-24 rounded-l-xl border-none"
     >
-      <!-- Same cart content but styled slightly modern -->
       <div class="d-flex flex-column h-100">
           <div class="pa-6 bg-teal-darken-4 text-white">
               <div class="d-flex align-center justify-space-between mb-4">
@@ -238,10 +184,9 @@
           
           <div class="flex-grow-1 overflow-y-auto bg-grey-lighten-5 px-4 pt-4">
                <div v-if="cart.length === 0" class="d-flex flex-column align-center justify-center fill-height pb-16 text-center">
-                    <v-img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" width="120" class="mb-6 opacity-60 grayscale"></v-img>
+                   <v-img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" width="120" class="mb-6 opacity-60 grayscale"></v-img>
                    <h3 class="text-h6 font-weight-medium text-grey-darken-2">Your bag is empty</h3>
-                   <p class="text-body-2 text-grey mb-8">Looks like you haven't made your choice yet.</p>
-                   <v-btn color="teal-darken-3" variant="flat" size="large" rounded="xl" class="font-weight-bold px-8" @click="cartDrawer = false">
+                   <v-btn color="teal-darken-3" variant="flat" size="large" rounded="xl" class="mt-6" @click="cartDrawer = false">
                         Start Shopping
                    </v-btn>
               </div>
@@ -254,9 +199,8 @@
                         class="mb-3 bg-white rounded-xl elevation-0 border-thin py-3"
                     >
                       <template v-slot:prepend>
-                          <div class="rounded-lg bg-grey-lighten-4 mr-4 d-flex align-center justify-center" style="width: 72px; height: 72px;">
-                           <!-- Use a product placeholder if no image, or specific product image if available -->
-                           <img :src="item.image || '/logo.svg'" class="rounded-lg object-contain w-full h-full mix-blend-multiply opacity-80" />
+                          <div class="rounded-lg bg-grey-lighten-4 mr-4 d-flex align-center justify-center overflow-hidden" style="width: 72px; height: 72px;">
+                           <img :src="item.image || '/logo.svg'" class="object-cover w-full h-full" />
                       </div>
                       </template>
                       
@@ -302,8 +246,8 @@
       </div>
     </v-navigation-drawer>
 
-    <!-- Refined Checkout Dialog -->
-    <v-dialog v-model="checkoutDialog" max-width="500" transition="dialog-bottom-transition">
+    <!-- Checkout Dialog -->
+    <v-dialog v-model="checkoutDialog" max-width="500">
       <v-card class="rounded-xl overflow-hidden elevation-24">
         <div class="bg-teal-darken-3 pa-8 text-white pb-12 relative overflow-hidden">
             <div class="absolute-bg-pattern opacity-10"></div>
@@ -312,97 +256,29 @@
         </div>
         <v-card-text class="pa-8 mt-n8 bg-white rounded-t-xl relative z-2">
           <v-form v-model="valid" @submit.prevent="submitOrder">
-            <div class="text-subtitle-2 font-weight-bold text-grey-darken-2 mb-4 text-uppercase ls-1">Contact Information</div>
-            
-            <v-text-field 
-                label="Full Name" 
-                v-model="customer.name" 
-                :rules="[v => !!v || 'Required']"
-                variant="outlined"
-                color="teal"
-                density="comfortable"
-                prepend-inner-icon="mdi-account-circle-outline"
-                class="mb-3"
-                bg-color="grey-lighten-5"
-            ></v-text-field>
-            
-            <v-text-field 
-                label="Mobile Number" 
-                v-model="customer.mobile" 
-                :rules="[v => !!v || 'Required', v => /^\d{10}$/.test(v) || 'Enter valid 10-digit mobile']"
-                variant="outlined"
-                color="teal"
-                density="comfortable"
-                prepend-inner-icon="mdi-cellphone"
-                class="mb-3"
-                bg-color="grey-lighten-5"
-            ></v-text-field>
-            
-            <div class="text-subtitle-2 font-weight-bold text-grey-darken-2 mb-4 mt-6 text-uppercase ls-1">Delivery Address</div>
-            
-            <v-textarea 
-                label="Address" 
-                v-model="customer.address"
-                :rules="[v => !!v || 'Required']"
-                variant="outlined"
-                color="teal"
-                rows="3"
-                prepend-inner-icon="mdi-map-marker-outline"
-                bg-color="grey-lighten-5"
-                class="mb-2"
-            ></v-textarea>
+            <v-text-field label="Full Name" v-model="customer.name" :rules="[v => !!v || 'Required']" variant="outlined" color="teal" class="mb-3"></v-text-field>
+            <v-text-field label="Mobile Number" v-model="customer.mobile" :rules="[v => !!v || 'Required']" variant="outlined" color="teal" class="mb-3"></v-text-field>
+            <v-textarea label="Address" v-model="customer.address" :rules="[v => !!v || 'Required']" variant="outlined" color="teal" rows="3"></v-textarea>
           </v-form>
         </v-card-text>
-        <v-divider></v-divider>
         <v-card-actions class="pa-6 bg-grey-lighten-5">
-          <v-btn variant="text" @click="checkoutDialog = false" color="grey-darken-1" class="font-weight-bold">Cancel</v-btn>
+          <v-btn variant="text" @click="checkoutDialog = false" color="grey-darken-1">Cancel</v-btn>
           <v-spacer></v-spacer>
-          <v-btn 
-            color="teal-darken-3" 
-            variant="flat" 
-            rounded="xl" 
-            size="large" 
-            class="px-8 font-weight-bold elevation-3"
-            @click="submitOrder" 
-            :disabled="!valid" 
-            :loading="loading"
-          >
-            Place Order
-          </v-btn>
+          <v-btn color="teal-darken-3" variant="flat" rounded="xl" size="large" @click="submitOrder" :disabled="!valid" :loading="loading">Place Order</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    
+
     <!-- Success Dialog -->
     <v-dialog v-model="successDialog" max-width="420">
-      <v-card class="text-center pa-8 rounded-xl overflow-visible">
-        <div class="mb-4">
-             <div class="d-inline-flex justify-center align-center bg-green-lighten-5 rounded-circle mb-6 elevation-0" style="width: 100px; height: 100px;">
-                <v-icon size="56" color="success">mdi-check-decagram</v-icon>
-             </div>
-             <h3 class="text-h4 font-weight-black text-grey-darken-4 mb-1">Order Placed!</h3>
-             <div class="text-subtitle-1 text-grey font-weight-medium">Order #{{ orderNo }}</div>
+      <v-card class="text-center pa-8 rounded-xl">
+        <div class="d-inline-flex justify-center align-center bg-green-lighten-5 rounded-circle mb-6 elevation-0" style="width: 100px; height: 100px;">
+            <v-icon size="56" color="success">mdi-check-decagram</v-icon>
         </div>
-        
-        <p class="mb-8 text-grey-darken-1 text-body-1">
-            Thank you for shopping! We've received your order and will process it shortly.
-        </p>
-        
-        <v-btn 
-            color="success" 
-            class="mb-3 font-weight-bold text-capitalize"
-            size="x-large" 
-            rounded="xl"
-            block
-            prepend-icon="mdi-whatsapp" 
-            :href="whatsappLink" 
-            target="_blank"
-            elevation="4"
-        >
-            Track on WhatsApp
-        </v-btn>
-        
-        <v-btn variant="text" block rounded="xl" size="large" @click="successDialog = false" class="text-grey-darken-1 mt-2">Continue Shopping</v-btn>
+        <h3 class="text-h4 font-weight-black text-grey-darken-4 mb-2">Order Placed!</h3>
+        <p class="text-body-1 text-grey mb-6">Order #{{ orderNo }}</p>
+        <v-btn color="success" size="x-large" rounded="xl" block :href="whatsappLink" target="_blank" prepend-icon="mdi-whatsapp">Track on WhatsApp</v-btn>
+        <v-btn variant="text" block class="mt-4" @click="successDialog = false">Close</v-btn>
       </v-card>
     </v-dialog>
 
@@ -411,9 +287,13 @@
 
 <script>
 import EventServices from '../../services/EventServices'
+import ShopProductCard from '../../components/ShopProductCard.vue'
 
 export default {
   name: 'PublicShop',
+  components: {
+    ShopProductCard
+  },
   data() {
     return {
       products: [],
@@ -426,7 +306,10 @@ export default {
       customer: { name: '', mobile: '', address: '' },
       whatsappLink: '',
       orderNo: '',
-      search: ''
+      search: '',
+      selectedCategory: 'All',
+      // Mock categories if backend doesn't provide them, or extract from products
+      categories: ['Medicine', 'Health Care', 'Baby Care', 'Personal Care', 'Groceries'] 
     }
   },
   computed: {
@@ -436,26 +319,37 @@ export default {
     cartTotalItems() {
         return this.cart.reduce((acc, item) => acc + item.qty, 0)
     },
+    computedCategories() {
+        // Dynamic extraction of brands/categories if available
+        const brands = new Set(this.products.map(p => p.brand ? p.brand.name : 'General'))
+        return ['All', ...Array.from(brands)]
+    },
     filteredProducts() {
-        if (!this.search) return this.products
-        const q = this.search.toLowerCase()
-        return this.products.filter(p => 
-            p.name.toLowerCase().includes(q) || 
-            (p.brand && p.brand.name.toLowerCase().includes(q))
-        )
+        let res = this.products
+        
+        // Category Filter
+        if (this.selectedCategory !== 'All') {
+            res = res.filter(p => (p.brand ? p.brand.name : 'General') === this.selectedCategory)
+        }
+        
+        // Search Filter
+        if (this.search) {
+            const q = this.search.toLowerCase()
+            res = res.filter(p => 
+                p.name.toLowerCase().includes(q) || 
+                (p.brand && p.brand.name.toLowerCase().includes(q))
+            )
+        }
+        return res
     }
   },
   mounted() {
     this.fetchProducts()
-    // Load saved customer details
     const saved = localStorage.getItem('saved_customer')
     if (saved) {
       try {
-        const parsed = JSON.parse(saved)
-        this.customer = { ...this.customer, ...parsed }
-      } catch (e) {
-        console.error("Failed to load saved customer", e)
-      }
+        this.customer = { ...this.customer, ...JSON.parse(saved) }
+      } catch (e) { console.error(e) }
     }
   },
   methods: {
@@ -466,7 +360,6 @@ export default {
         this.products = res.data
       } catch(e) { 
         console.error(e)
-        // Ideally use a snackbar here
       }
       finally { this.loading = false }
     },
@@ -479,14 +372,19 @@ export default {
       if (existing) {
         existing.qty++
       } else {
+        // Use generic image from card logic if not present
         this.cart.push({
           id: product.id,
           name: product.name,
           unit_price: product.unit_price,
-          qty: 1
+          qty: 1,
+          image: product.image 
         })
       }
       this.cartDrawer = true
+    },
+    viewProduct(product) {
+        console.log("View product", product)
     },
     updateQty(item, delta) {
       item.qty += delta
@@ -514,7 +412,6 @@ export default {
         
         const res = await EventServices.submitOrder(payload)
         
-        // Save customer details for next time
         localStorage.setItem('saved_customer', JSON.stringify({
             name: this.customer.name,
             mobile: this.customer.mobile,
@@ -530,7 +427,6 @@ export default {
         
       } catch(e) {
         console.error(e)
-        // Ideally use a snackbar here, simplified with alert for now or add snackbar
         alert("Failed to place order. Please try again.")
       } finally {
         this.loading = false
@@ -570,7 +466,7 @@ export default {
 .w-fit { width: fit-content; }
 .h-full { height: 100%; }
 
-/* Hero Styling */
+/* Hero Styling - Reverted to Teal Gradient */
 .hero-section {
     background: linear-gradient(135deg, #004D40 0%, #00695C 100%);
     min-height: 600px;
@@ -586,6 +482,7 @@ export default {
 .hero-overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
+    /* Subtle texture */
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     z-index: 0;
 }
@@ -594,21 +491,7 @@ export default {
 .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
 .from-teal-200 { --tw-gradient-stops: #b2f5ea, var(--tw-gradient-to, #ffffff); }
 .to-white { --tw-gradient-to: #ffffff; }
-
-/* Product Card */
-.product-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.wrapper-hover-effect:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1) !important;
-}
-.hover-zoom { transition: transform 0.5s ease; }
-.wrapper-hover-effect:hover .hover-zoom {
-    transform: scale(1.05);
-}
-.hover-red:hover { color: #e53935 !important; background-color: #ffebee !important; }
-.hover-teal:hover { background-color: #00695C !important; }
+.outline-none:focus { outline: none; }
 
 /* Utilities */
 .elevation-0 { box-shadow: none !important; }
@@ -620,13 +503,6 @@ export default {
 .rounded-xl { border-radius: 20px !important; }
 .rounded-full { border-radius: 9999px; }
 
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.outline-none:focus { outline: none; }
 .border-thin { border: 1px solid rgba(0,0,0,0.05); }
 
 /* Decorative */
@@ -637,5 +513,16 @@ export default {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-15px); }
     100% { transform: translateY(0px); }
+}
+
+.hover-scale { transition: transform 0.2s; }
+.hover-scale:hover { transform: scale(1.05); }
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 </style>

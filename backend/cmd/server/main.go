@@ -29,6 +29,7 @@ func main() {
 		&models.User{},
 		&models.LoginHistory{},
 		&models.Brand{},
+		&models.Category{}, // Added
 		&models.Product{},
 		&models.StockEntry{},
 		&models.Customer{},
@@ -86,6 +87,7 @@ func main() {
 	// Public Read (Authenticated)
 	r.GET("/api/v1/inventory/products", middleware.AuthMiddleware(), inventoryHandler.ListProducts)
 	r.GET("/api/v1/inventory/brands", middleware.AuthMiddleware(), inventoryHandler.ListBrands)
+	r.GET("/api/v1/inventory/categories", middleware.AuthMiddleware(), inventoryHandler.ListCategories) // Added
 
 	// Protected Inventory Ops
 	invRoutes := r.Group("/api/v1/inventory")
@@ -94,6 +96,7 @@ func main() {
 		invRoutes.POST("/products", inventoryHandler.CreateProduct)
 		invRoutes.POST("/stock", inventoryHandler.AddStock)
 		invRoutes.GET("/alerts", inventoryHandler.GetLowStockAlerts)
+		invRoutes.POST("/categories", inventoryHandler.CreateCategory) // Added
 	}
 
 	managerHandler := &handler.ManagerHandler{}
@@ -136,6 +139,7 @@ func main() {
 		publicRoutes.GET("/config", publicHandler.GetPublicConfig)
 		publicRoutes.GET("/products", publicHandler.ListPublicProducts)
 		publicRoutes.POST("/orders", publicHandler.SubmitOrder)
+		publicRoutes.GET("/site-info", publicHandler.GetSiteInfo)
 	}
 
 	r.GET("/ping", func(c *gin.Context) {

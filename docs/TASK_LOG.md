@@ -1,0 +1,55 @@
+# Task Document - Seyyal Billing System
+
+This document tracks all tasks, features, and fixes carried out during the project development.
+
+- [x] Implement 'Complete in POS' button in Biller Orders <!-- id: 15 -->
+- [x] Handle orderId query param in Billing POS <!-- id: 16 -->
+- [x] Identify all Composition API components <!-- id: 0 -->
+- [x] Create Implementation Plan <!-- id: 1 -->
+- [x] Refactor Auth components (Login.vue) <!-- id: 2 -->
+- [x] Refactor Inventory Dashboard & Home <!-- id: 3 -->
+- [x] Refactor Inventory Features (ProductList, AddStock, Alerts) <!-- id: 4 -->
+- [x] Refactor Manager/Admin components <!-- id: 5 -->
+- [x] Verify functionality <!-- id: 6 -->
+- [x] Debug POS Order Persistence (Pending List Update) <!-- id: 17 -->
+- [/] Refactor Biller and Public components API calls <!-- id: 7 -->
+- [ ] Verify all API calls are centralized <!-- id: 8 -->
+- [x] Redesign Shop page (UI/UX) <!-- id: 9 -->
+- [x] Redesign Customer Orders Screen (Biller) <!-- id: 18 -->
+- [x] Fix Manager Navigation & Dashboard (Stock Entry/View) <!-- id: 19 -->
+- [x] Restored Separate Dashboard files for all roles <!-- id: 20 -->
+- [x] Fix Logout functionality in all Dashboards <!-- id: 21 -->
+- [x] Refactor Admin Views to Options API <!-- id: 11 -->
+- [x] Refactor Remaining Biller Views to Options API <!-- id: 12 -->
+- [x] Refactor Remaining Manager Views to Options API <!-- id: 13 -->
+- [x] Refactor Components & App.vue to Options API <!-- id: 14 -->
+- [x] Improve WhatsApp Message in Shop (Include Full Data)
+- [x] Target WhatsApp Message to Customer Number
+- [x] Frontend: Persist Customer Details (LocalStorage) for Repeat Orders
+- [x] Backend: Update Existing Customer Details on New Order
+- [ ] Fix Mobile Responsiveness (Manager: Customers, Sales, Stock)
+- [x] Add Search Field to Shop Page
+- [x] Redesign Shop Page (Modern & Elegant)
+- [x] Move Backend Config to .env
+- [x] Rebrand Application Name to "Seyyal" (செயல்)
+- [x] Integrate Logo SVG ("செயல்")
+- [x] Remove redundancy from App Bar
+- [x] Update Sidebar and Login Branding
+- [x] Configure API Base URL for Production
+- [x] Link Dashboard Logo to Home Screen
+- [x] Rebuild Frontend for Production
+- [x] Initialize Git Repository & Commit Changes
+- [x] Fix Git Push Payload Size Issue
+- [x] Build Frontend for Production
+- [x] Configure Firebase Hosting
+- [ ] Deploy to Firebase
+- [x] Create Backend Dockerfile
+- [x] Create render.yaml
+- [ ] Deploy to Render
+- [x] Create Business Requirement Document (BRD)
+- [x] Create API Documentation
+- [x] Create User Guide
+- [x] Create Developer Documentation
+- [x] Create Comprehensive Technical Reference (DB Schema & API Details)
+- [x] Create Work Plan Document
+- [x] Export Task Log Document

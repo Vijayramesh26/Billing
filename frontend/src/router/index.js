@@ -29,6 +29,7 @@ const routes = [
     children: [
       { path: '', name: 'InventoryHome', component: () => import('../views/inventory/Home.vue') },
       { path: 'products', name: 'InventoryProducts', component: () => import('../views/inventory/ProductList.vue') },
+      { path: 'categories', name: 'InventoryCategories', component: () => import('../views/inventory/Categories.vue') }, // Added
       { path: 'stock', name: 'InventoryStock', component: () => import('../views/inventory/AddStock.vue') },
       { path: 'alerts', name: 'InventoryAlerts', component: () => import('../views/inventory/Alerts.vue') },
     ]
@@ -61,10 +62,18 @@ const routes = [
   // Public Routes (Website)
   {
     path: '/shop',
-    name: 'PublicShop',
-    component: () => import('../views/public/Shop.vue'),
-    // meta: { layout: 'PublicLayout' }
-  }
+    component: () => import('../layouts/ShopLayout.vue'),
+    children: [
+      { path: '', name: 'ShopHome', component: () => import('../views/public/shop/Home.vue') },
+      { path: 'home', redirect: '/shop' },
+      { path: 'products', name: 'ShopProducts', component: () => import('../views/public/shop/Products.vue') },
+      { path: 'about', name: 'ShopAbout', component: () => import('../views/public/shop/About.vue') },
+      { path: 'contact', name: 'ShopContact', component: () => import('../views/public/shop/Contact.vue') },
+      { path: 'gallery', name: 'ShopGallery', component: () => import('../views/public/shop/Gallery.vue') },
+    ]
+  },
+  // Redirect old public route if any access it directly
+  { path: '/public/shop', redirect: '/shop' }
 ]
 
 const router = createRouter({

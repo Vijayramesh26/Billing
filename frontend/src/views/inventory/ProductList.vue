@@ -52,6 +52,10 @@
             <div class="font-weight-bold text-body-1 text-grey-darken-3">{{ item.name }}</div>
             <div class="text-caption text-medium-emphasis">{{ item.description }}</div>
         </template>
+        <template v-slot:item.category="{ item }">
+             <v-chip size="small" variant="outlined" color="primary" v-if="item.category">{{ item.category.name }}</v-chip>
+             <span v-else class="text-caption text-grey">Uncategorized</span>
+        </template>
         <template v-slot:item.unit_price="{ item }">
           <v-chip color="success" variant="tonal" size="small" class="font-weight-bold">₹{{ item.unit_price }}</v-chip>
         </template>
@@ -88,7 +92,29 @@
                    <v-text-field v-model="newItem.name" label="Product Name" variant="outlined" density="comfortable" color="primary"></v-text-field>
               </v-col>
               <v-col cols="6">
-                   <v-text-field v-model="newItem.brand_name" label="Brand Name" variant="outlined" density="comfortable" color="primary"></v-text-field>
+                   <v-combobox
+                      v-model="newItem.brand_name"
+                      :items="brands"
+                      item-title="name"
+                      item-value="name"
+                      label="Brand Name"
+                      variant="outlined"
+                      density="comfortable"
+                      color="primary"
+                      return-object="false"
+                   ></v-combobox>
+              </v-col>
+              <v-col cols="6">
+                   <v-combobox
+                      v-model="selectedCategory"
+                      :items="categoryNames"
+                      label="Category"
+                      variant="outlined"
+                      density="comfortable"
+                      color="primary"
+                      hint="Select or type new category"
+                      persistent-hint
+                   ></v-combobox>
               </v-col>
               <v-col cols="6">
                    <v-text-field v-model="newItem.barcode" label="Barcode" variant="outlined" density="comfortable" color="primary" append-inner-icon="mdi-barcode"></v-text-field>
@@ -101,6 +127,9 @@
               </v-col>
               <v-col cols="12">
                   <v-textarea v-model="newItem.description" label="Description" rows="3" variant="outlined" density="comfortable" color="primary"></v-textarea>
+              </v-col>
+              <v-col cols="6">
+                   <v-text-field v-model.number="newItem.opening_stock" label="Opening Stock" type="number" variant="outlined" density="comfortable" color="primary"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -118,6 +147,8 @@
 
 <script>
 import EventServices from '../../services/EventServices'
+import { mapState, mapActions } from 'pinia'
+import { useCategoryStore } from '@/stores/category'
 
 export default {
   name: 'ProductList',
@@ -125,29 +156,39 @@ export default {
     return {
       headers: [
         { title: 'Name', key: 'name', align: 'start' },
+        { title: 'Category', key: 'category' },
         { title: 'Brand', key: 'brand.name' },
         { title: 'Price', key: 'unit_price' },
         { title: 'Stock', key: 'current_stock' },
         { title: 'Barcode', key: 'barcode' },
       ],
       products: [],
+      brands: [],
       loading: false,
       dialog: false,
       search: '',
+      selectedCategory: null,
       newItem: {
         name: '',
         brand_name: '',
         unit_price: 0,
         low_stock_threshold: 10,
         barcode: '',
-        description: ''
+        description: '',
+        opening_stock: 0
       }
     }
   },
+  computed: {
+    ...mapState(useCategoryStore, ['categories', 'categoryNames'])
+  },
   mounted() {
     this.fetchProducts()
+    this.fetchCategories()
+    this.fetchBrands()
   },
   methods: {
+    ...mapActions(useCategoryStore, ['fetchCategories', 'createCategory']),
     async fetchProducts() {
       this.loading = true
       try {
@@ -156,12 +197,36 @@ export default {
       } catch (err) { console.error(err) }
       finally { this.loading = false }
     },
+    async fetchBrands() {
+      try {
+        const res = await EventServices.getBrands()
+        this.brands = res.data.map(b => b.name)
+      } catch (err) { console.error(err) }
+    },
     async save() {
       try {
-        await EventServices.addProduct(this.newItem)
+        let categoryId = null;
+        
+        // Handle Category Selection/Creation
+        if (this.selectedCategory) {
+            const existing = this.categories.find(c => c.name === this.selectedCategory);
+            if (existing) {
+                categoryId = existing.id;
+            } else {
+                // Create new category if selected one is new
+                const newCat = await this.createCategory({ name: this.selectedCategory });
+                categoryId = newCat.id;
+            }
+        }
+        
+        const payload = { ...this.newItem, category_id: categoryId }
+        
+        await EventServices.addProduct(payload)
         this.fetchProducts()
+        this.fetchBrands() // Refresh brands in case a new one was created
         this.dialog = false
-        this.newItem = { name: '', brand_name: '', unit_price: 0, low_stock_threshold: 10, barcode: '', description: '' }
+        this.newItem = { name: '', brand_name: '', unit_price: 0, low_stock_threshold: 10, barcode: '', description: '', opening_stock: 0 }
+        this.selectedCategory = null
       } catch(e) { console.error(e) }
     },
     getStockColor(item) {
