@@ -34,47 +34,55 @@
       </v-list>
     </v-navigation-drawer>
 
-    <!-- App Bar -->
+    <!-- Floating Capsule App Bar -->
     <v-app-bar 
       flat 
       fixed 
-      class="transition-all duration-300 px-4"
-      :class="scrolled ? 'glass shadow-soft' : 'bg-white'"
-      :height="scrolled ? 70 : 80"
+      class="floating-capsule-appbar"
+      height="80"
     >
-      <v-app-bar-nav-icon class="d-md-none" @click="drawer = !drawer"></v-app-bar-nav-icon>
-      
-      <div class="d-flex align-center cursor-pointer" @click="$router.push('/shop')">
-         <img src="/logo.svg" alt="Logo" height="40" class="mr-2" />
-        <span class="text-h5 font-heading font-weight-bold text-primary d-none d-sm-block">
-          {{ siteInfo?.name }}<span class="text-secondary">.</span>
-        </span>
-      </div>
+      <v-container class="d-flex align-center h-100 px-6" fluid>
+        <!-- Left: Branding -->
+        <div class="d-flex align-center cursor-pointer logo-section" @click="$router.push('/shop')" style="width: 200px;">
+           <img src="/logo.svg" alt="Logo" height="38" class="mr-2 logo-bounce" />
+          <!-- <span class="text-h5 font-heading font-weight-bold text-secondary d-none d-sm-block">
+            {{ siteInfo?.name }}
+          </span> -->
+        </div>
 
-      <v-spacer></v-spacer>
+        <!-- Center: Navigation -->
+        <div class="d-none d-md-flex align-center flex-grow-1 justify-center nav-items-wrapper">
+          <v-btn
+            v-for="item in items"
+            :key="item.title"
+            :to="item.to"
+            variant="text"
+            rounded="pill"
+            class="nav-item-btn mx-1"
+          >
+            {{ item.title }}
+          </v-btn>
+        </div>
 
-      <div class="d-none d-md-flex align-center gap-2">
-        <v-btn
-          v-for="item in items"
-          :key="item.title"
-          :to="item.to"
-          variant="text"
-          class="text-body-2 font-weight-bold text-uppercase mx-1 text-primary"
-        >
-          {{ item.title }}
-        </v-btn>
-         
-         <!-- Cart Button (Integrated) -->
-         <v-btn icon @click="toggleDrawer" class="text-primary hover-scale ml-2">
-             <v-badge :content="cartTotalItems" color="error" v-if="cartTotalItems" floating dot class="font-weight-bold">
-                <v-icon>mdi-cart-outline</v-icon>
-            </v-badge>
-             <v-icon v-else>mdi-cart-outline</v-icon>
-         </v-btn>
-      </div>
+        <!-- Right: Actions -->
+        <div class="d-flex align-center justify-end" style="width: 200px;">
+           <div class="d-none d-md-block divider mx-4"></div>
+           
+           <!-- Cart Button -->
+           <v-btn icon @click="toggleDrawer" class="cart-btn-floating">
+               <v-badge :content="cartTotalItems" color="secondary" v-if="cartTotalItems" floating overlap>
+                  <v-icon size="24">mdi-shopping-outline</v-icon>
+              </v-badge>
+               <v-icon v-else size="24">mdi-shopping-outline</v-icon>
+           </v-btn>
+
+           <!-- Mobile Drawer Toggle -->
+           <v-app-bar-nav-icon class="d-md-none ml-2" @click="drawer = !drawer"></v-app-bar-nav-icon>
+        </div>
+      </v-container>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="pt-0">
       <router-view v-slot="{ Component }">
         <transition name="fade-up" mode="out-in">
           <component :is="Component" />
@@ -88,7 +96,8 @@
         location="right" 
         width="450" 
         temporary
-        class="elevation-24 rounded-l-xl border-none"
+        class="elevation-24 rounded-l-xl border-none shadow-premium"
+        style="position: fixed !important; height: 100vh !important; top: 0 !important;"
     >
       <div class="d-flex flex-column h-100">
           <div class="pa-6 bg-primary text-white">
@@ -374,4 +383,122 @@ export default {
 .border-opacity-25 { border-color: rgba(255, 255, 255, 0.25) !important; }
 .transition-all { transition: all 0.3s ease; }
 .hover-scale:hover { transform: scale(1.1); }
+
+/* Floating Capsule Appbar */
+.floating-capsule-appbar {
+  position: fixed !important;
+  top: 0 !important;
+  background: #ffffff !important;
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid rgba(197, 160, 101, 0.4) !important; /* Golden Touch Border */
+  box-shadow: 
+    0 10px 30px -5px rgba(0, 0, 0, 0.1),
+    0 5px 20px rgba(197, 160, 101, 0.15), /* Golden Glow */
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  border-radius: 999px !important;
+  width: calc(100% - 48px) !important;
+  max-width: 1200px !important;
+  margin: 16px auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 2000 !important;
+}
+
+/* Golden branding highlight */
+.logo-section .text-secondary {
+  color: #c5a065 !important;
+  text-shadow: 0 0 10px rgba(197, 160, 101, 0.3);
+}
+
+/* Nav Item Centering & Scaling */
+.nav-items-wrapper {
+  gap: 8px;
+}
+
+.nav-item-btn {
+  font-size: 0.85rem !important;
+  letter-spacing: 0.5px !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  text-transform: uppercase !important;
+  transition: all 0.3s ease !important;
+}
+
+.nav-item-btn:hover {
+  background: rgba(197, 160, 101, 0.1) !important;
+  color: #c5a065 !important;
+  transform: translateY(-2px);
+}
+
+.nav-item-btn.v-btn--active {
+  background: #c5a065 !important;
+  color: white !important;
+}
+
+/* Liquid Shine Effect */
+.floating-capsule-appbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.7s;
+  pointer-events: none;
+}
+
+.floating-capsule-appbar:hover::before {
+  left: 150%;
+}
+
+/* Logo Animation */
+.logo-bounce {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-section:hover .logo-bounce {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Cart Button */
+.cart-btn-floating {
+  background: rgba(197, 160, 101, 0.1) !important;
+  color: #c5a065 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.cart-btn-floating:hover {
+  background: #c5a065 !important;
+  color: white !important;
+  transform: scale(1.1);
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(197, 160, 101, 0.2);
+}
+
+/* Transitions */
+.fade-up-enter-active, .fade-up-leave-active {
+  transition: all 0.4s ease;
+}
+.fade-up-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fade-up-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
 </style>
