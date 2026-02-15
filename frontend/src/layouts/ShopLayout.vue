@@ -6,6 +6,7 @@
       temporary 
       class="glass-dark bg-primary text-white" 
       width="300"
+      style="position: fixed !important; height: 100vh !important; top: 0 !important; z-index: 3000 !important;"
     >
       <div class="pa-6 text-center">
         <v-avatar size="80" color="secondary" class="mb-4 text-white font-weight-bold text-h4">
@@ -97,7 +98,7 @@
         width="450" 
         temporary
         class="elevation-24 rounded-l-xl border-none shadow-premium"
-        style="position: fixed !important; height: 100vh !important; top: 0 !important;"
+        style="position: fixed !important; height: 100vh !important; top: 0 !important; z-index: 3000 !important;"
     >
       <div class="d-flex flex-column h-100">
           <div class="pa-6 bg-primary text-white">
@@ -436,6 +437,14 @@ export default {
 .nav-item-btn.v-btn--active {
   background: #c5a065 !important;
   color: white !important;
+}
+
+/* Glass Dark Style */
+.glass-dark {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Liquid Shine Effect */
