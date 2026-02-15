@@ -28,6 +28,7 @@ type DatabaseConfig struct {
 	User     string
 	Password string
 	Name     string
+	URL      string
 }
 
 type DefaultsConfig struct {
@@ -72,6 +73,7 @@ func LoadConfig() {
 			User:     viper.GetString("DB_USER"),
 			Password: viper.GetString("DB_PASSWORD"),
 			Name:     viper.GetString("DB_NAME"),
+			URL:      viper.GetString("DATABASE_URL"),
 		},
 		Defaults: DefaultsConfig{
 			AdminPassword:   viper.GetString("ADMIN_PASSWORD"),
