@@ -1,32 +1,32 @@
-import { defineStore } from 'pinia'
-import axios from 'axios'
+import { defineStore } from "pinia";
+import axios from "axios";
 
-export const useSiteStore = defineStore('site', {
+export const useSiteStore = defineStore("site", {
   state: () => ({
     siteInfo: {
-      name: 'Seyal',
-      tagline: 'Loading...',
-      description: '',
-      logo: '/logo.svg',
-      address: '',
-      phone: '',
-      email: '',
-      socials: {}
+      name: "Seyal",
+      tagline: "Loading...",
+      description: "",
+      logo: "/logo.png",
+      address: "",
+      phone: "",
+      email: "",
+      socials: {},
     },
-    loading: false
+    loading: false,
   }),
   actions: {
     async fetchSiteInfo() {
-      this.loading = true
+      this.loading = true;
       try {
         // Use relative path which proxys to backend or absolute URL if configured
-        const res = await axios.get('/api/v1/public/site-info') 
-        this.siteInfo = res.data
+        const res = await axios.get("/api/v1/public/site-info");
+        this.siteInfo = res.data;
       } catch (error) {
-        console.error('Failed to fetch site info:', error)
+        console.error("Failed to fetch site info:", error);
       } finally {
-        this.loading = false
+        this.loading = false;
       }
-    }
-  }
-})
+    },
+  },
+});
